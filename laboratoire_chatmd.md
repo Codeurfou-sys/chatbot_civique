@@ -1,278 +1,77 @@
----
-titre: Laboratoire ChatMD V8 — quatre syntaxes code postal
-variablesDynamiques: true
-plugins: readcsv
-obfuscate: false
-preload:
-  - https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/lieux_dits_test.csv
-  - https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/centres_frate.csv
----
+# Test E --- condition fixe (sans variable)
 
-# Laboratoire ChatMD V8
+Ce test permet de vérifier si **ChatMD applique réellement la directive
+`condition:`**.
 
-Ce laboratoire compare quatre syntaxes de filtrage pour identifier celle qui fonctionne avec les codes postaux.
+Le filtre est volontairement codé en dur sur le code postal **67000**.
 
-1. [Commencer le test](V8_MENU)
+👉 Si ce test retourne uniquement les lignes ayant le code postal
+**67000**, alors le moteur `condition` fonctionne et le problème vient
+de l'utilisation des variables (`ask()`).
 
-## V8_MENU
+👉 Si ce test ne retourne rien ou retourne toutes les lignes, alors le
+problème vient du moteur `readcsv` lui-même.
 
-### Tests disponibles
+------------------------------------------------------------------------
 
-1. [Test A — égalité exacte](V8_TEST_A)
-2. [Test B — includes()](V8_TEST_B)
-3. [Test C — conversion en chaîne avec concaténation](V8_TEST_C)
-4. [Test D — startsWith() avec saisie directe](V8_TEST_D)
-5. [Comparer les quatre résultats](V8_BILAN)
+``` uai
+button("Lancer le test E")
+goto test_e_execution
+```
 
----
+``` uai
+button("Retour au menu")
+goto menu
+```
 
-## V8_TEST_A
+------------------------------------------------------------------------
 
-### Test A — égalité exacte
+## test_e_execution
 
-`if !@cpA`
+``` uai
+readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/lieux_dits_test.csv
 
-Saisissez un code postal présent dans le CSV.
+condition: $1 == "67000"
 
-Exemples : `67000`, `21000`, `63000`.
+maxResults: 10
 
-`endif`
+### Résultats
 
-`if @cpA`
+$i. **$2 — $1**
 
-`@cpAPurified = calc(@cpA.trim())`
+Adresse : $3
 
-Valeur saisie : **`@cpA`**  
-Valeur nettoyée : **`@cpAPurified`**
-
-```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/lieux_dits_test.csv
-condition: $1 == "`@cpAPurified`"
-maxResults: 5
-
-### $i. $2 — $1
-
-Adresse : $3  
 Coordonnées : $4, $5
 ```
 
-`@resultatA = réussi si des lignes apparaissent`
+------------------------------------------------------------------------
 
-`@cpA = undefined`
-`@cpAPurified = undefined`
+### Variante 1
 
-`endif`
-
-`@cpA = @INPUT : V8_TEST_A`
-
-1. [Recommencer le test A](V8_TEST_A)
-2. [Retour au menu](V8_MENU)
-
----
-
-## V8_TEST_B
-
-### Test B — recherche avec `.includes()`
-
-`if !@cpB`
-
-Saisissez un code postal présent dans le CSV.
-
-`endif`
-
-`if @cpB`
-
-`@cpBPurified = calc(@cpB.trim())`
-
-Valeur saisie : **`@cpB`**  
-Valeur nettoyée : **`@cpBPurified`**
-
-```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/lieux_dits_test.csv
-condition: $1.includes("`@cpBPurified`")
-maxResults: 5
-
-### $i. $2 — $1
-
-Adresse : $3  
-Coordonnées : $4, $5
+``` uai
+condition: "67000" == $1
 ```
 
-`@resultatB = réussi si des lignes apparaissent`
+### Variante 2
 
-`@cpB = undefined`
-`@cpBPurified = undefined`
-
-`endif`
-
-`@cpB = @INPUT : V8_TEST_B`
-
-1. [Recommencer le test B](V8_TEST_B)
-2. [Retour au menu](V8_MENU)
-
----
-
-## V8_TEST_C
-
-### Test C — conversion en chaîne par concaténation
-
-`if !@cpC`
-
-Saisissez un code postal présent dans le CSV.
-
-`endif`
-
-`if @cpC`
-
-`@cpCPurified = calc(@cpC.trim())`
-
-Valeur saisie : **`@cpC`**  
-Valeur nettoyée : **`@cpCPurified`**
-
-```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/lieux_dits_test.csv
-condition: ($1+"").startsWith("`@cpCPurified`")
-maxResults: 5
-
-### $i. $2 — $1
-
-Adresse : $3  
-Coordonnées : $4, $5
+``` uai
+condition: $1 = "67000"
 ```
 
-`@resultatC = réussi si des lignes apparaissent`
+### Variante 3
 
-`@cpC = undefined`
-`@cpCPurified = undefined`
-
-`endif`
-
-`@cpC = @INPUT : V8_TEST_C`
-
-1. [Recommencer le test C](V8_TEST_C)
-2. [Retour au menu](V8_MENU)
-
----
-
-## V8_TEST_D
-
-### Test D — `startsWith()` avec variable saisie directement
-
-Ce test reprend au plus près le modèle officiel UAI, sans variable intermédiaire dans la condition.
-
-`if !@cpD`
-
-Saisissez un code postal présent dans le CSV.
-
-`endif`
-
-`if @cpD`
-
-Valeur saisie : **`@cpD`**
-
-```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/lieux_dits_test.csv
-condition: $1.startsWith("`@cpD`")
-maxResults: 5
-
-### $i. $2 — $1
-
-Adresse : $3  
-Coordonnées : $4, $5
+``` uai
+condition: $1 === "67000"
 ```
 
-`@resultatD = réussi si des lignes apparaissent`
+------------------------------------------------------------------------
 
-`@cpD = undefined`
-
-`endif`
-
-`@cpD = @INPUT : V8_TEST_D`
-
-1. [Recommencer le test D](V8_TEST_D)
-2. [Retour au menu](V8_MENU)
-
----
-
-## V8_CENTRES
-
-### Vérification complémentaire sur le CSV FRATE
-
-Cette section permet de réutiliser la syntaxe gagnante sur la colonne `$3` du fichier des centres.
-
-`if !@cpCentre`
-
-Saisissez un code postal de centre : `67000`, `21000`, `63000`.
-
-`endif`
-
-`if @cpCentre`
-
-`@cpCentrePurified = calc(@cpCentre.trim())`
-
-#### Égalité exacte
-
-```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/centres_frate.csv
-condition: $3 == "`@cpCentrePurified`"
-maxResults: 5
-
-### Centre de $2
-
-Code postal : $3  
-Région : $4  
-[Inscription](link:$7)
+``` uai
+button("Recommencer le test E")
+goto test_e_execution
 ```
 
-#### includes()
-
-```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/centres_frate.csv
-condition: $3.includes("`@cpCentrePurified`")
-maxResults: 5
-
-### Centre de $2
-
-Code postal : $3  
-Région : $4
+``` uai
+button("Retour au menu")
+goto menu
 ```
-
-#### Conversion puis startsWith()
-
-```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/centres_frate.csv
-condition: ($3+"").startsWith("`@cpCentrePurified`")
-maxResults: 5
-
-### Centre de $2
-
-Code postal : $3  
-Région : $4
-```
-
-`@cpCentre = undefined`
-`@cpCentrePurified = undefined`
-
-`endif`
-
-`@cpCentre = @INPUT : V8_CENTRES`
-
-1. [Recommencer la vérification FRATE](V8_CENTRES)
-2. [Retour au menu](V8_MENU)
-
----
-
-## V8_BILAN
-
-# Comparaison des résultats
-
-| Test | Syntaxe | Résultat |
-|---|---|---|
-| A | `$1 == "variable"` | `@resultatA` |
-| B | `$1.includes("variable")` | `@resultatB` |
-| C | `($1+"").startsWith("variable")` | `@resultatC` |
-| D | `$1.startsWith("@cpD")` sans variable intermédiaire | `@resultatD` |
-
-### Interprétation
-
-- Si **A** fonctionne, retenir l’égalité exacte pour les codes postaux.
-- Si **B** fonctionne, retenir `.includes()`.
-- Si **C** fonctionne, cela confirme que la colonne est numérique et doit être convertie en chaîne.
-- Si **D** fonctionne, le problème venait de la variable intermédiaire ou de son ordre d’évaluation.
-- Si plusieurs tests fonctionnent, retenir **A**, car c’est la syntaxe la plus simple et la plus précise.
-
-1. [Tester les mêmes syntaxes sur les centres FRATE](V8_CENTRES)
-2. [Retour au menu](V8_MENU)
