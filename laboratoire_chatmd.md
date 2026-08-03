@@ -1,585 +1,296 @@
 ---
-titre: Laboratoire ChatMD V2 — Variables, conditions, formulaires, NLP et géolocalisation
+titre: Laboratoire ChatMD V3
 variablesDynamiques: true
 geolocation: true
+plugins: readcsv
 obfuscate: false
-gestionGrosMots: false
-rechercheContenu: false
 ---
 
-# Laboratoire ChatMD V2
+# Laboratoire ChatMD V3
 
-Ce laboratoire utilise la syntaxe officielle fournie dans la documentation ChatMD.
+Ce laboratoire est destiné à valider systématiquement les fonctionnalités de ChatMD avant leur intégration dans le chatbot Examen civique.
 
-1. [Commencer les tests](#LAB_MENU)
+## MENU
 
-## LAB_MENU
+1. [Variables et @INPUT](#T1)
+2. [Champ HTML input](#T2)
+3. [Liste déroulante select](#T3)
+4. [Variables par bouton](#T4)
+5. [Conditions if / endif](#T5)
+6. [calc() et calculs](#T6)
+7. [Fonctions trim / toLowerCase / toUpperCase](#T7)
+8. [includes()](#T8)
+9. [startsWith() / endsWith()](#T9)
+10. [encodeURI()](#T10)
+11. [mainTopic()](#T11)
+12. [Paramètres @GET](#T12)
+13. [Géolocalisation](#T13)
+14. [URL dynamique](#T14)
+15. [Plugin readcsv](#T15)
+16. [Navigation conditionnelle](#T16)
+17. [Mémoire des variables](#T17)
+18. [Quiz](#T18)
+19. [Plusieurs bots](#T19)
+20. [Bilan](#REPORT)
 
-### Tableau de bord
+## T1
 
-Effectuez les tests dans l’ordre.
+Saisissez votre prénom.
 
-1. [Test 1 — Navigation interne](#LAB_NAVIGATION)
-2. [Test 2 — @INPUT et affichage d’une variable](#LAB_INPUT)
-3. [Test 3 — Champ HTML `<input>`](#LAB_FORM_INPUT)
-4. [Test 4 — Liste HTML `<select>`](#LAB_FORM_SELECT)
-5. [Test 5 — Variable définie par un bouton](#LAB_BUTTON_VAR)
-6. [Test 6 — Conditions](#LAB_CONDITIONS)
-7. [Test 7 — Calcul et traitement séquentiel](#LAB_CALC)
-8. [Test 8 — Fonctions sur une chaîne](#LAB_STRING)
-9. [Test 9 — Détection de mots-clés avec `.includes()`](#LAB_KEYWORDS)
-10. [Test 10 — Extraction avec `mainTopic()`](#LAB_MAIN_TOPIC)
-11. [Test 11 — Paramètre URL `@GET...`](#LAB_GET)
-12. [Test 12 — Géolocalisation](#LAB_GEO)
-13. [Test 13 — Lien externe ordinaire](#LAB_EXTERNAL_LINK)
-14. [Test 14 — URL dynamique expérimentale](#LAB_DYNAMIC_URL)
-15. [Test 15 — Mémoire des variables](#LAB_MEMORY)
-16. [Afficher le bilan](#LAB_REPORT)
+!Next: T1_RESULT
 
-## LAB_NAVIGATION
-
-### Test 1 — Navigation interne
-
-Si vous êtes arrivé ici depuis le menu, le lien interne Markdown fonctionne.
-
-`@testNavigation = réussi`
-
-1. [Retour au laboratoire](#LAB_MENU)
-
-## LAB_INPUT
-
-### Test 2 — Récupération de la dernière réponse avec `@INPUT`
-
-Écrivez votre prénom dans la zone principale de saisie de ChatMD, puis envoyez.
-
-!Next: LAB_INPUT_RESULT
-
-1. [Retour au laboratoire](#LAB_MENU)
-
-## LAB_INPUT_RESULT
+## T1_RESULT
 
 `@prenom = calc(@INPUT)`
 
-Bonjour **`@prenom`**.
+Bonjour **`@prenom`**
 
-La dernière réponse reçue par ChatMD était : **`@INPUT`**.
+Dernière saisie : **`@INPUT`**
 
-`if @prenom != undefined && @prenom.trim().length()>0`
+1. [Retour](#MENU)
 
-✅ `@INPUT`, `calc(@INPUT)` et l’affichage avec les backticks fonctionnent.
+## T2
 
-`@testInput = réussi`
+<label>Ville :</label>
+<input type="text" id="ville" name="ville" value="`@ville`"/>
 
-`endif`
+Ville : **`@ville`**
 
-`if !@prenom || @prenom.trim().length()==0`
+1. [Retour](#MENU)
 
-❌ Aucune valeur n’a été enregistrée.
+## T3
 
-`@testInput = échoué`
-
-`endif`
-
-1. [Recommencer ce test](#LAB_INPUT)
-2. [Retour au laboratoire](#LAB_MENU)
-
-## LAB_FORM_INPUT
-
-### Test 3 — Champ HTML `<input>`
-
-Saisissez une commune, puis appuyez sur **Entrée** dans le champ.
-
-<label for="commune">Commune recherchée :</label>
-
-<input type="text" id="commune" name="commune" value="`@commune`" placeholder="Exemple : Strasbourg" />
-
-`if @commune != undefined && @commune.trim().length()>0`
-
-Valeur enregistrée : **`@commune`**
-
-✅ Le champ HTML alimente directement la variable `@commune`.
-
-`@testFormInput = réussi`
-
-1. [Tester les mots-clés avec cette commune](#LAB_KEYWORDS)
-
-`endif`
-
-`if !@commune || @commune.trim().length()==0`
-
-La variable n’est pas encore remplie. Saisissez une valeur et appuyez sur Entrée.
-
-`endif`
-
-1. [Retour au laboratoire](#LAB_MENU)
-
-## LAB_FORM_SELECT
-
-### Test 4 — Liste déroulante `<select>`
-
-<label for="typeExamen">Vous préparez :</label>
-
-<select name="typeExamen" id="typeExamen" data-selected="`@typeExamen`">
-   <option value="">À sélectionner</option>
-   <option value="CR">la carte de résident</option>
-   <option value="CSP">la carte de séjour pluriannuelle</option>
-   <option value="NAT">la naturalisation</option>
+<select name="type" data-selected="`@type`">
+<option value="">Choisir</option>
+<option value="CR">Carte résident</option>
+<option value="CSP">Carte séjour</option>
+<option value="NAT">Naturalisation</option>
 </select>
 
-`if @typeExamen == "CR"`
+Valeur : **`@type`**
 
-Vous avez choisi : **carte de résident**.
+1. [Retour](#MENU)
 
-`@testSelect = réussi`
+## T4
 
-`endif`
+1. [Grand Est @region=Grand Est](#BTN)
+2. [BFC @region=BFC](#BTN)
 
-`if @typeExamen == "CSP"`
+## BTN
 
-Vous avez choisi : **carte de séjour pluriannuelle**.
+Région : **`@region`**
 
-`@testSelect = réussi`
+1. [Retour](#MENU)
 
-`endif`
+## T5
 
-`if @typeExamen == "NAT"`
+`if @region=="Grand Est"`
 
-Vous avez choisi : **naturalisation**.
-
-`@testSelect = réussi`
-
-`endif`
-
-Valeur technique : **`@typeExamen`**
-
-1. [Retour au laboratoire](#LAB_MENU)
-
-## LAB_BUTTON_VAR
-
-### Test 5 — Variable définie dans un bouton
-
-1. [Grand Est @region=Grand Est](#LAB_BUTTON_RESULT)
-2. [Bourgogne @region=Bourgogne](#LAB_BUTTON_RESULT)
-3. [Auvergne @region=Auvergne](#LAB_BUTTON_RESULT)
-4. [Retour au laboratoire](#LAB_MENU)
-
-## LAB_BUTTON_RESULT
-
-Région mémorisée : **`@region`**
-
-`if @region != undefined`
-
-✅ La variable du bouton est enregistrée et affichée.
-
-`@testButton = réussi`
+✅ Condition Grand Est
 
 `endif`
 
-1. [Modifier la région](#LAB_BUTTON_VAR)
-2. [Retour au laboratoire](#LAB_MENU)
+`if @region=="BFC"`
 
-## LAB_CONDITIONS
-
-### Test 6 — Blocs conditionnels
-
-`if @typeExamen == "CR"`
-
-✅ Condition CR validée.
-
-`@testCondition = réussi`
+✅ Condition BFC
 
 `endif`
 
-`if @typeExamen == "CSP"`
+1. [Retour](#MENU)
 
-✅ Condition CSP validée.
+## T6
 
-`@testCondition = réussi`
+`@score=2`
 
-`endif`
+Avant : **`@score`**
 
-`if @typeExamen == "NAT"`
+`@score=calc(@score+5)`
 
-✅ Condition NAT validée.
+Après : **`@score`**
 
-`@testCondition = réussi`
+1. [Retour](#MENU)
 
-`endif`
+## T7
 
-`if @typeExamen == undefined`
+`@texte=calc(@INPUT)`
+`@mini=calc(@texte.toLowerCase())`
+`@maj=calc(@texte.toUpperCase())`
+`@trim=calc(@texte.trim())`
 
-La variable `@typeExamen` n’est pas encore définie.
+Mini : **`@mini`**
 
-1. [Choisir un type d’examen](#LAB_FORM_SELECT)
+Maj : **`@maj`**
 
-`endif`
+Trim : **`@trim`**
 
-1. [Retour au laboratoire](#LAB_MENU)
+1. [Retour](#MENU)
 
-## LAB_CALC
+## T8
 
-### Test 7 — Calcul et traitement séquentiel
+`if @trim.toLowerCase().includes("strasbourg")`
 
-`@score = 2`
-
-Score initial : **`@score`**
-
-`@score = calc(@score+3)`
-
-Score après l’ajout de 3 points : **`@score`**
-
-`if @score == 5`
-
-✅ Le calcul et le traitement séquentiel fonctionnent.
-
-`@testCalc = réussi`
+Mot détecté : Strasbourg
 
 `endif`
 
-`if @score != 5`
+1. [Retour](#MENU)
 
-❌ Le score attendu était 5.
+## T9
 
-`@testCalc = échoué`
+`if @trim.startsWith("prochaines")`
 
-`endif`
-
-1. [Retour au laboratoire](#LAB_MENU)
-
-## LAB_STRING
-
-### Test 8 — Fonctions sur une chaîne
-
-Saisissez une phrase dans la zone principale, par exemple :
-
-**Prochaines dates à Strasbourg**
-
-!Next: LAB_STRING_RESULT
-
-1. [Retour au laboratoire](#LAB_MENU)
-
-## LAB_STRING_RESULT
-
-`@phrase = calc(@INPUT)`
-`@phraseNettoyee = calc(@phrase.trim().toLowerCase())`
-`@phraseEncodee = calc(encodeURI(@phrase.trim()))`
-
-Phrase originale : **`@phrase`**
-
-Phrase normalisée : **`@phraseNettoyee`**
-
-Phrase encodée pour une URL : **`@phraseEncodee`**
-
-Longueur : **`@phraseNettoyee.length()`**
-
-`if @phraseNettoyee.length()>0`
-
-✅ `trim()`, `toLowerCase()`, `length()` et `encodeURI()` sont exécutés.
-
-`@testString = réussi`
+startsWith OK
 
 `endif`
 
-1. [Tester les mots-clés](#LAB_KEYWORDS_FROM_PHRASE)
-2. [Tester le sujet principal](#LAB_MAIN_TOPIC_FROM_PHRASE)
-3. [Retour au laboratoire](#LAB_MENU)
+`if @trim.endsWith("strasbourg")`
 
-## LAB_KEYWORDS
-
-### Test 9A — Détection de mots-clés depuis la commune
-
-Commune actuelle : **`@commune`**
-
-`if @commune != undefined && @commune.toLowerCase().includes("strasbourg")`
-
-✅ Le mot-clé **Strasbourg** a été détecté.
-
-`@ville = Strasbourg`
-`@destinationTest = SCR_PASS_CITY_STRASBOURG`
-`@testKeywords = réussi`
+endsWith OK
 
 `endif`
 
-`if @commune != undefined && @commune.toLowerCase().includes("dijon")`
+1. [Retour](#MENU)
 
-✅ Le mot-clé **Dijon** a été détecté.
+## T10
 
-`@ville = Dijon`
-`@destinationTest = SCR_PASS_CITY_DIJON`
-`@testKeywords = réussi`
+`@url=calc(encodeURI(@trim))`
 
-`endif`
+URL :
 
-Ville produite : **`@ville`**
+**`@url`**
 
-Destination produite : **`@destinationTest`**
+1. [Retour](#MENU)
 
-1. [Retour au laboratoire](#LAB_MENU)
+## T11
 
-## LAB_KEYWORDS_FROM_PHRASE
+`@topic=calc(mainTopic(@trim))`
 
-### Test 9B — Détection dans une phrase libre
+Sujet :
 
-Phrase analysée : **`@phraseNettoyee`**
+**`@topic`**
 
-`if @phraseNettoyee.includes("date") && @phraseNettoyee.includes("strasbourg")`
+1. [Retour](#MENU)
 
-✅ Intention détectée : prochaines dates à Strasbourg.
+## T12
 
-`@intention = QL_DATE_VILLE`
-`@ville = Strasbourg`
-`@testKeywords = réussi`
+Département :
 
-`endif`
+**`@GETdepartement`**
 
-`if @phraseNettoyee.includes("centre") && @phraseNettoyee.includes("proche")`
+1. [Retour](#MENU)
 
-✅ Intention détectée : centre le plus proche.
+## T13
 
-`@intention = QL_CENTRE_PROCHE`
-`@testKeywords = réussi`
+Latitude :
 
-`endif`
+**`@LATITUDE`**
 
-Intention produite : **`@intention`**
+Longitude :
 
-Ville produite : **`@ville`**
+**`@LONGITUDE`**
 
-1. [Retour au laboratoire](#LAB_MENU)
+Précision :
 
-## LAB_MAIN_TOPIC
+**`@POSITION_ACCURACY`**
 
-### Test 10 — `mainTopic()`
+1. [Retour](#MENU)
 
-Saisissez une phrase courte dans la zone principale.
+## T14
 
-Exemples :
+Lien test :
 
-- prochaines dates à Strasbourg
-- prix de l’examen
-- définition de la laïcité
+[Recherche BAN](link:https://api-adresse.data.gouv.fr/search/?q=`@url`&limit=3)
 
-!Next: LAB_MAIN_TOPIC_RESULT
+1. [Retour](#MENU)
 
-1. [Retour au laboratoire](#LAB_MENU)
+## T15
 
-## LAB_MAIN_TOPIC_RESULT
+Objectif :
 
-`@texteSujet = calc(@INPUT)`
-`@sujetPrincipal = calc(mainTopic(@texteSujet))`
+- charger readcsv
+- lire un CSV GitHub
+- rechercher une ville
+- récupérer un écran
 
-Phrase : **`@texteSujet`**
+À compléter avec la syntaxe officielle issue d'un exemple opérationnel.
 
-Sujet principal extrait : **`@sujetPrincipal`**
+1. [Retour](#MENU)
 
-`if @sujetPrincipal != undefined`
+## T16
 
-✅ `mainTopic()` a retourné une valeur.
+`if @region=="Grand Est"`
 
-`@testMainTopic = réussi`
+1. [Aller vers Strasbourg](#STRAS)
 
 `endif`
 
-1. [Retour au laboratoire](#LAB_MENU)
+## STRAS
 
-## LAB_MAIN_TOPIC_FROM_PHRASE
+Navigation conditionnelle OK.
 
-`@sujetPrincipal = calc(mainTopic(@phrase))`
+1. [Retour](#MENU)
 
-Sujet extrait de la phrase précédente : **`@sujetPrincipal`**
+## T17
 
-1. [Retour au laboratoire](#LAB_MENU)
+Variables mémorisées :
 
-## LAB_GET
+- `@prenom`
+- `@ville`
+- `@type`
+- `@region`
+- `@score`
+- `@topic`
 
-### Test 11 — Paramètre dans l’URL
+1. [Retour](#MENU)
 
-Pour tester cette fonctionnalité, ajoutez manuellement à l’adresse du laboratoire :
+## T18
 
-`?departement=67`
+Question :
 
-ou, si l’URL contient déjà un `?`, ajoutez :
+Quelle est la devise de la République ?
 
-`&departement=67`
+1. [Liberté, Égalité, Fraternité @scoreQuiz=1](#QUIZ)
+2. [Travail, Famille, Patrie @scoreQuiz=0](#QUIZ)
 
-Valeur reçue : **`@GETdepartement`**
+## QUIZ
 
-`if @GETdepartement == "67"`
+Score :
 
-✅ Le paramètre URL `departement=67` est reconnu.
+**`@scoreQuiz`**
 
-`@testGet = réussi`
+1. [Retour](#MENU)
 
-`endif`
+## T19
 
-`if @GETdepartement == undefined`
+Ce test servira à vérifier les appels entre plusieurs bots.
 
-Aucun paramètre `departement` n’a été détecté.
+1. [Retour](#MENU)
 
-`endif`
+## REPORT
 
-1. [Retour au laboratoire](#LAB_MENU)
+# Résultats attendus
 
-## LAB_GEO
-
-### Test 12 — Géolocalisation
-
-Latitude : **`@LATITUDE`**
-
-Longitude : **`@LONGITUDE`**
-
-Précision : **`@POSITION_ACCURACY`** mètres
-
-`if @LATITUDE != undefined && @LONGITUDE != undefined`
-
-✅ Les coordonnées ont été obtenues.
-
-`@testGeo = réussi`
-
-`endif`
-
-`if @LATITUDE>41.0 && @LATITUDE<51.5 && @LONGITUDE>-5.0 && @LONGITUDE<9.5`
-
-La position semble se trouver en France métropolitaine.
-
-`endif`
-
-`if Math.abs(@LATITUDE - 48.5734)<0.5 && Math.abs(@LONGITUDE - 7.7521)<0.5`
-
-La position semble proche de **Strasbourg**.
-
-`endif`
-
-`if @LATITUDE == undefined`
-
-La géolocalisation n’a pas fonctionné ou n’a pas été autorisée.
-
-`@testGeo = échoué ou refusé`
-
-`endif`
-
-1. [Recharger le test de géolocalisation](#LAB_GEO)
-2. [Retour au laboratoire](#LAB_MENU)
-
-## LAB_EXTERNAL_LINK
-
-### Test 13 — Lien externe
-
-Le bouton ci-dessous doit ouvrir la documentation ChatMD dans un nouvel onglet.
-
-1. [Ouvrir la documentation ChatMD](link:https://chatmd.forge.apps.education.fr/docs/)
-2. [Retour au laboratoire](#LAB_MENU)
-
-## LAB_DYNAMIC_URL
-
-### Test 14 — URL dynamique expérimentale
-
-Ce test utilise une variable affichée dans une URL Markdown.
-
-Commune disponible : **`@commune`**
-
-Commune encodée : **`@communeEncodee`**
-
-`if @commune != undefined`
-
-`@communeEncodee = calc(encodeURI(@commune.trim()))`
-
-[Tester l’API BAN avec la commune](link:https://api-adresse.data.gouv.fr/search/?q=`@communeEncodee`&limit=3)
-
-`endif`
-
-`if @commune == undefined`
-
-Aucune commune n’est enregistrée.
-
-1. [Saisir une commune](#LAB_FORM_INPUT)
-
-`endif`
-
-### Variante avec la dernière phrase
-
-Phrase encodée : **`@phraseEncodee`**
-
-`if @phraseEncodee != undefined`
-
-[Tester l’API BAN avec la phrase](link:https://api-adresse.data.gouv.fr/search/?q=`@phraseEncodee`&limit=3)
-
-`endif`
-
-`@testDynamicUrl = à vérifier dans le navigateur`
-
-1. [Retour au laboratoire](#LAB_MENU)
-
-## LAB_MEMORY
-
-### Test 15 — Conservation des variables
-
-- Prénom : **`@prenom`**
-- Commune : **`@commune`**
-- Type d’examen : **`@typeExamen`**
-- Région : **`@region`**
-- Score : **`@score`**
-- Phrase : **`@phrase`**
-- Intention : **`@intention`**
-- Ville : **`@ville`**
-- Sujet principal : **`@sujetPrincipal`**
-- Latitude : **`@LATITUDE`**
-- Longitude : **`@LONGITUDE`**
-
-`@testMemory = à vérifier`
-
-1. [Retour au laboratoire](#LAB_MENU)
-
-## LAB_REPORT
-
-### Bilan des tests
-
-| Fonction | Résultat |
+| Fonction | Validation |
 |---|---|
-| Navigation | `@testNavigation` |
-| `@INPUT` et affichage | `@testInput` |
-| Champ `<input>` | `@testFormInput` |
-| Liste `<select>` | `@testSelect` |
-| Variable dans un bouton | `@testButton` |
-| Conditions | `@testCondition` |
-| Calcul séquentiel | `@testCalc` |
-| Fonctions sur chaînes | `@testString` |
-| Détection `.includes()` | `@testKeywords` |
-| NLP `mainTopic()` | `@testMainTopic` |
-| Paramètre `@GET...` | `@testGet` |
-| Géolocalisation | `@testGeo` |
-| URL dynamique | `@testDynamicUrl` |
-| Mémoire | `@testMemory` |
+| @INPUT | ☐ |
+| input HTML | ☐ |
+| select HTML | ☐ |
+| Variables | ☐ |
+| Conditions | ☐ |
+| calc() | ☐ |
+| trim() | ☐ |
+| includes() | ☐ |
+| startsWith() | ☐ |
+| endsWith() | ☐ |
+| encodeURI() | ☐ |
+| mainTopic() | ☐ |
+| @GET | ☐ |
+| Géolocalisation | ☐ |
+| URL dynamique | ☐ |
+| readcsv | ☐ |
+| Navigation conditionnelle | ☐ |
+| Mémoire | ☐ |
+| Quiz | ☐ |
+| Plusieurs bots | ☐ |
 
-### Points décisifs pour le module 07
-
-- Si `<input>` fonctionne, l’utilisateur pourra saisir directement une ville ou un code postal.
-- Si `.includes()` fonctionne, la rubrique Question libre pourra détecter des mots dans une phrase.
-- Si `encodeURI()` et l’URL dynamique fonctionnent, la saisie pourra être transmise à la BAN.
-- Si la géolocalisation fonctionne, ChatMD pourra comparer la position de l’utilisateur aux coordonnées des centres.
-- Si `mainTopic()` fonctionne, il pourra compléter le routage par mots-clés.
-- Le plugin `readcsv` devra faire l’objet d’un laboratoire séparé dès que sa syntaxe complète aura été reproduite depuis un exemple officiel.
-
-1. [Réinitialiser les indicateurs](#LAB_RESET)
-2. [Retour au laboratoire](#LAB_MENU)
-
-## LAB_RESET
-
-`@testNavigation = undefined`
-`@testInput = undefined`
-`@testFormInput = undefined`
-`@testSelect = undefined`
-`@testButton = undefined`
-`@testCondition = undefined`
-`@testCalc = undefined`
-`@testString = undefined`
-`@testKeywords = undefined`
-`@testMainTopic = undefined`
-`@testGet = undefined`
-`@testGeo = undefined`
-`@testDynamicUrl = undefined`
-`@testMemory = undefined`
-
-Les indicateurs du laboratoire ont été réinitialisés.
-
-1. [Retour au laboratoire](#LAB_MENU)
+Une fois cette grille entièrement validée, le chatbot Examen civique pourra être adapté aux capacités réelles de ChatMD.
