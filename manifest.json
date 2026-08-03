@@ -1,0 +1,31 @@
+{
+  "generated_at": "2026-08-03T12:39:32+02:00",
+  "workbook": "C:\\Users\\timot\\Documents\\GitHub\\Chatbot_civique\\exports_chatmd\\FICHIER_EXCEL_MOTEUR_CHAT_BOT_module07_actualise.xlsx",
+  "screens_total": 695,
+  "screens_exported": 695,
+  "navigation_total": 2732,
+  "navigation_exported": 2732,
+  "module_files": [
+    "modules\\start.md",
+    "modules\\00_accueil_complements.md",
+    "modules\\02_bilan.md",
+    "modules\\08_conseils.md",
+    "modules\\09_faq.md",
+    "modules\\04_glossaire.md",
+    "modules\\06_entrainement.md",
+    "modules\\07_passer_examen.md",
+    "modules\\05_preparer_examen.md",
+    "modules\\10_question_libre.md",
+    "modules\\03_revisions.md"
+  ],
+  "data_files": [
+    "data\\faq.csv",
+    "data\\glossaire.csv",
+    "data\\intentions.csv",
+    "data\\entites.csv",
+    "data\\sessions.json",
+    "data\\variables.json"
+  ],
+  "errors": 0,
+  "warnings": 207
+}

@@ -1,0 +1,232 @@
+{
+  "CLERMONT_FERRAND": {
+    "code_centre": "CLERMONT_FERRAND",
+    "ville": "Clermont-Ferrand",
+    "query": "Clermont-Ferrand 63",
+    "label": "Clermont-Ferrand",
+    "latitude": 45.786671,
+    "longitude": 3.107055,
+    "score": 0.8672509090909091,
+    "updated_at": "2026-08-03T12:15:23+02:00"
+  },
+  "LE_PUY_EN_VELAY": {
+    "code_centre": "LE_PUY_EN_VELAY",
+    "ville": "Le Puy-en-Velay",
+    "query": "Le Puy-en-Velay 43",
+    "label": "Le Puy-en-Velay",
+    "latitude": 45.031845,
+    "longitude": 3.899669,
+    "score": 0.85786,
+    "updated_at": "2026-08-03T12:15:23+02:00"
+  },
+  "SAINT_FLOUR": {
+    "code_centre": "SAINT_FLOUR",
+    "ville": "Saint-Flour",
+    "query": "Saint-Flour 15",
+    "label": "Saint-Flour",
+    "latitude": 45.02387,
+    "longitude": 3.07272,
+    "score": 0.853020909090909,
+    "updated_at": "2026-08-03T12:15:23+02:00"
+  },
+  "AUXERRE": {
+    "code_centre": "AUXERRE",
+    "ville": "Auxerre",
+    "query": "Auxerre 89",
+    "label": "Auxerre",
+    "latitude": 47.790189,
+    "longitude": 3.580299,
+    "score": 0.8607609090909091,
+    "updated_at": "2026-08-03T12:15:24+02:00"
+  },
+  "DIJON": {
+    "code_centre": "DIJON",
+    "ville": "Dijon",
+    "query": "Dijon 21",
+    "label": "Dijon",
+    "latitude": 47.331953,
+    "longitude": 5.033601,
+    "score": 0.8677081818181818,
+    "updated_at": "2026-08-03T12:15:24+02:00"
+  },
+  "MACON": {
+    "code_centre": "MACON",
+    "ville": "Mâcon",
+    "query": "Mâcon 71",
+    "label": "Mâcon",
+    "latitude": 46.325859,
+    "longitude": 4.810979,
+    "score": 0.860770909090909,
+    "updated_at": "2026-08-03T12:15:24+02:00"
+  },
+  "MONTCEAU_LES_MINES": {
+    "code_centre": "MONTCEAU_LES_MINES",
+    "ville": "Montceau-les-Mines",
+    "query": "Montceau-les-Mines 71",
+    "label": "Montceau-les-Mines",
+    "latitude": 46.676942,
+    "longitude": 4.358337,
+    "score": 0.8574827272727272,
+    "updated_at": "2026-08-03T12:15:25+02:00"
+  },
+  "NEVERS": {
+    "code_centre": "NEVERS",
+    "ville": "Nevers",
+    "query": "Nevers 58",
+    "label": "Nevers",
+    "latitude": 46.988535,
+    "longitude": 3.160778,
+    "score": 0.8604927272727272,
+    "updated_at": "2026-08-03T12:15:25+02:00"
+  },
+  "SENS": {
+    "code_centre": "SENS",
+    "ville": "Sens",
+    "query": "Sens 89",
+    "label": "Sens",
+    "latitude": 48.191643,
+    "longitude": 3.29284,
+    "score": 0.8595863636363636,
+    "updated_at": "2026-08-03T12:15:25+02:00"
+  },
+  "BOURGES": {
+    "code_centre": "BOURGES",
+    "ville": "Bourges",
+    "query": "Bourges 18",
+    "label": "Bourges",
+    "latitude": 47.082882,
+    "longitude": 2.402294,
+    "score": 0.8635045454545454,
+    "updated_at": "2026-08-03T12:15:26+02:00"
+  },
+  "BESANCON": {
+    "code_centre": "BESANCON",
+    "ville": "Besançon",
+    "query": "Besançon 25",
+    "label": "Besançon",
+    "latitude": 47.251938,
+    "longitude": 6.001699,
+    "score": 0.866290909090909,
+    "updated_at": "2026-08-03T12:15:26+02:00"
+  },
+  "LONS_LE_SAUNIER": {
+    "code_centre": "LONS_LE_SAUNIER",
+    "ville": "Lons-le-Saunier",
+    "query": "Lons-le-Saunier 39",
+    "label": "Lons-le-Saunier",
+    "latitude": 46.677412,
+    "longitude": 5.558932,
+    "score": 0.8573627272727272,
+    "updated_at": "2026-08-03T12:15:26+02:00"
+  },
+  "MONTBELIARD": {
+    "code_centre": "MONTBELIARD",
+    "ville": "Montbéliard",
+    "query": "Montbéliard 25",
+    "label": "Montbéliard",
+    "latitude": 47.508197,
+    "longitude": 6.794689,
+    "score": 0.8591590909090908,
+    "updated_at": "2026-08-03T12:15:27+02:00"
+  },
+  "CHAUMONT": {
+    "code_centre": "CHAUMONT",
+    "ville": "Chaumont",
+    "query": "Chaumont 52",
+    "label": "Chaumont",
+    "latitude": 48.104307,
+    "longitude": 5.129976,
+    "score": 0.8583890909090909,
+    "updated_at": "2026-08-03T12:15:27+02:00"
+  },
+  "MULHOUSE": {
+    "code_centre": "MULHOUSE",
+    "ville": "Mulhouse",
+    "query": "Mulhouse 68",
+    "label": "mulhouse 68400 Riedisheim",
+    "latitude": 47.749468,
+    "longitude": 7.36973,
+    "score": 0.8731590909090908,
+    "updated_at": "2026-08-03T12:15:27+02:00"
+  },
+  "REIMS": {
+    "code_centre": "REIMS",
+    "ville": "Reims",
+    "query": "Reims 51",
+    "label": "Reims",
+    "latitude": 49.250948,
+    "longitude": 4.055595,
+    "score": 0.8681327272727273,
+    "updated_at": "2026-08-03T12:15:28+02:00"
+  },
+  "SAINT_DIE_DES_VOSGES": {
+    "code_centre": "SAINT_DIE_DES_VOSGES",
+    "ville": "Saint-Dié-des-Vosges",
+    "query": "Saint-Dié-des-Vosges 88",
+    "label": "Saint-Dié-des-Vosges",
+    "latitude": 48.294697,
+    "longitude": 6.940983,
+    "score": 0.8580309090909091,
+    "updated_at": "2026-08-03T12:15:28+02:00"
+  },
+  "STRASBOURG": {
+    "code_centre": "STRASBOURG",
+    "ville": "Strasbourg",
+    "query": "Strasbourg 67",
+    "label": "Strasbourg",
+    "latitude": 48.579831,
+    "longitude": 7.761454,
+    "score": 0.8704181818181818,
+    "updated_at": "2026-08-03T12:15:28+02:00"
+  },
+  "TROYES": {
+    "code_centre": "TROYES",
+    "ville": "Troyes",
+    "query": "Troyes 10",
+    "label": "Troyes",
+    "latitude": 48.292817,
+    "longitude": 4.075149,
+    "score": 0.8633536363636363,
+    "updated_at": "2026-08-03T12:15:29+02:00"
+  },
+  "ANNEMASSE": {
+    "code_centre": "ANNEMASSE",
+    "ville": "Annemasse",
+    "query": "Annemasse 74",
+    "label": "Annemasse",
+    "latitude": 46.189327,
+    "longitude": 6.243054,
+    "score": 0.8610772727272727,
+    "updated_at": "2026-08-03T12:15:29+02:00"
+  },
+  "ANNECY": {
+    "code_centre": "ANNECY",
+    "ville": "Annecy",
+    "query": "Annecy 74",
+    "label": "Annecy",
+    "latitude": 45.901584,
+    "longitude": 6.125296,
+    "score": 0.8667854545454544,
+    "updated_at": "2026-08-03T12:15:29+02:00"
+  },
+  "BOURG_EN_BRESSE": {
+    "code_centre": "BOURG_EN_BRESSE",
+    "ville": "Bourg-en-Bresse",
+    "query": "Bourg-en-Bresse 01",
+    "label": "Bourg-en-Bresse",
+    "latitude": 46.204893,
+    "longitude": 5.241148,
+    "score": 0.8616172727272727,
+    "updated_at": "2026-08-03T12:15:29+02:00"
+  },
+  "VALSERHONE": {
+    "code_centre": "VALSERHONE",
+    "ville": "Valserhône",
+    "query": "Valserhône 01",
+    "label": "Rue du Bugey 01200 Valserhône",
+    "latitude": 46.114489,
+    "longitude": 5.783079,
+    "score": 0.4074520779220779,
+    "updated_at": "2026-08-03T12:15:30+02:00"
+  }
+}

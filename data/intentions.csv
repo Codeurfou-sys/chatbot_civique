@@ -1,0 +1,47 @@
+﻿id_regle;intention;type_correspondance;expression_principale;contexte_necessaire;exclusion;entite_attendue;variable_produite;ecran_si_complet;priorite;ecran_si_information_manquante;message_de_confirmation;variable_obligatoire;action_de_repli;actif
+QLR_001;QL_DATE_VILLE;Expression exacte;prochaines dates;"examen; session";"prix; coût";VILLE;{ville};{ecran_centre};SCR_QL_GEO_MISSING;;;;;
+QLR_002;QL_DATE_VILLE;Expression exacte;prochaine session;"examen; inscription";"prix; coût";VILLE;{ville};{ecran_centre};SCR_QL_GEO_MISSING;;;;;
+QLR_003;QL_DATE_VILLE;Combinaison;"date; session";ville FRATE reconnue;"prix; coût";VILLE;{ville};{ecran_centre};SCR_QL_GEO_MISSING;;;;;
+QLR_004;QL_CENTRE_PROCHE;Expression exacte;centre le plus proche;"commune; adresse; code postal";;LOCALISATION;{saisie_localisation};SCR_PASS_RESULTS_NEAR;SCR_QL_GEO_MISSING;;;;;
+QLR_005;QL_CENTRE_PROCHE;Combinaison;"centre; proche";"habite; près; autour; commune; département";;LOCALISATION;{saisie_localisation};SCR_PASS_RESULTS_NEAR;SCR_QL_GEO_MISSING;;;;;
+QLR_006;QL_CODE_POSTAL;Format;\b[0-9]{5}\b;"centre; examen; session; date";score;CODE_POSTAL;{code_postal};SCR_PASS_INPUT_CP;SCR_QL_GEO_MISSING;;;;;
+QLR_007;QL_REGION;Combinaison;"session; date; centre; inscription";région reconnue;révision;REGION;{region};{ecran_region};SCR_PASS_REGIONS;;;;;
+QLR_008;QL_INSCRIPTION;Expression exacte;m'inscrire;"examen; session; centre";;VILLE_OU_REGION;"{ville}; {region}";{ecran_centre_ou_region};SCR_PASS_REGIONS;;;;;
+QLR_009;QL_INSCRIPTION;Mot-clé;inscription;"examen; forms; formulaire";formation;VILLE_OU_REGION;"{ville}; {region}";{ecran_centre_ou_region};SCR_PASS_REGIONS;;;;;
+QLR_010;QL_PRIX;Combinaison;"prix; coût; tarif";"examen; inscription";formation gratuite;;{faq_id};SCR_FAQ_019;SCR_FAQ_SEARCH;;;;;
+QLR_011;QL_FORMAT;Expression exacte;combien de questions;"examen; qcm";;;{faq_id};SCR_FAQ_004;SCR_FAQ_SEARCH;;;;;
+QLR_012;QL_SCORE;Combinaison;"score; réussir; 32 sur 40; 80 %";examen;bilan de progression;;{faq_id};SCR_FAQ_009;SCR_FAQ_SEARCH;;;;;
+QLR_013;QL_ECHEC;Combinaison;"échoué; échec; raté; repasser";examen;entretien;;{faq_id};SCR_FAQ_026;SCR_FAQ_SEARCH;;;;;
+QLR_014;QL_DEFINITION;Expression exacte;qu'est-ce que;"notion; mot; signifie";"examen; inscription";TERME;{mot_recherche};SCR_GLO_SEARCH;SCR_QL_TERM_MISSING;;;;;
+QLR_015;QL_DEFINITION;Combinaison;"signifie; veut dire; définition";mot ou notion reconnue;"examen; inscription";TERME;{mot_recherche};SCR_GLO_SEARCH;SCR_QL_TERM_MISSING;;;;;
+QLR_016;QL_LAICITE;Mot-clé;laïcité;"définition; comprendre; religion";;TERME;{mot_recherche};SCR_GLO_SEARCH;SCR_GLO_SEARCH;;;;;
+QLR_017;QL_REVISIONS;Mot-clé;réviser;"histoire; institutions; droits; géographie; société";date examen;THEME;{theme};SCR_REV_MENU;SCR_REV_MENU;;;;;
+QLR_018;QL_ENTRAINEMENT;Combinaison;"m'entraîner; entraînement; quiz";"qcm; question; mise en situation";date examen;TYPE_EXAMEN_THEME;"{type_examen}; {theme}";SCR_ENT_MENU;SCR_ENT_MENU;;;;;
+QLR_019;QL_EXAMEN_BLANC;Expression exacte;examen blanc;"simulation; test; conditions réelles";session officielle;TYPE_EXAMEN;{type_examen};SCR_PREP_MENU;SCR_PREP_MENU;;;;;
+QLR_020;QL_MEMOIRE;Combinaison;"mémoriser; retenir; oublier";"date; symbole; notion";date examen;;{rubrique};SCR_CONS_MEMOIRE_MENU;SCR_CONS_MENU;;;;;
+QLR_021;QL_STRESS;Combinaison;"stress; peur; angoisse; inquiet";"examen; entretien; jour j";échec;;{rubrique};SCR_CONS_ENTRETIEN_MENU;SCR_CONS_MENU;;;;;
+QLR_022;QL_BILAN;Combinaison;"bilan; progression; suis-je prêt";"niveau; points faibles; résultats";score examen officiel;;{type_bilan};SCR_BIL_MENU;SCR_BIL_MENU;;;;;
+QLR_023;QL_FAQ;Mot-clé générique;"comment; pourquoi; faut-il; peut-on";"examen; naturalisation; OFII; NovaFrate";définition précise;;{requete_faq};SCR_FAQ_SEARCH;SCR_FAQ_SEARCH;;;;;
+QLR_001;;;;;;;;;;SCR_QL_GEO_MISSING;Je recherche les prochaines dates d’examen à {ville}.;{ville};Reformuler ou ouvrir le module générique;Oui
+QLR_002;;;;;;;;;;SCR_QL_GEO_MISSING;Je recherche la prochaine session disponible à {ville}.;{ville};Reformuler ou ouvrir le module générique;Oui
+QLR_003;;;;;;;;;;SCR_QL_GEO_MISSING;Votre question concerne les sessions d’examen à {ville}.;{ville};Reformuler ou ouvrir le module générique;Oui
+QLR_004;;;;;;;;;;SCR_QL_GEO_MISSING;Je recherche les centres FRATE les plus proches de {saisie_localisation}.;{saisie_localisation};Reformuler ou ouvrir le module générique;Oui
+QLR_005;;;;;;;;;;SCR_QL_GEO_MISSING;Je vais rechercher les centres les plus proches.;{saisie_localisation};Reformuler ou ouvrir le module générique;Oui
+QLR_006;;;;;;;;;;SCR_QL_GEO_MISSING;Je recherche les centres et sessions associés au code postal {code_postal}.;{code_postal};Reformuler ou ouvrir le module générique;Oui
+QLR_007;;;;;;;;;;SCR_PASS_REGIONS;Je recherche les centres et sessions de la région {region}.;{region};Reformuler ou ouvrir le module générique;Oui
+QLR_008;;;;;;;;;;SCR_PASS_REGIONS;Je vous oriente vers l’inscription adaptée.;"{ville}; {region}";Reformuler ou ouvrir le module générique;Oui
+QLR_009;;;;;;;;;;SCR_PASS_REGIONS;Votre question concerne l’inscription à l’examen.;"{ville}; {region}";Reformuler ou ouvrir le module générique;Oui
+QLR_010;;;;;;;;;;SCR_FAQ_SEARCH;Je vous montre la réponse sur le prix de l’examen.;;Reformuler ou ouvrir le module générique;Oui
+QLR_011;;;;;;;;;;SCR_FAQ_SEARCH;Je vous montre le format de l’examen.;;Reformuler ou ouvrir le module générique;Oui
+QLR_012;;;;;;;;;;SCR_FAQ_SEARCH;Je vous montre le score nécessaire pour réussir.;;Reformuler ou ouvrir le module générique;Oui
+QLR_013;;;;;;;;;;SCR_FAQ_SEARCH;Je vous explique quoi faire après un échec.;;Reformuler ou ouvrir le module générique;Oui
+QLR_014;;;;;;;;;;SCR_QL_TERM_MISSING;Je recherche la définition de « {mot_recherche} ».;{mot_recherche};Reformuler ou ouvrir le module générique;Oui
+QLR_015;;;;;;;;;;SCR_QL_TERM_MISSING;Vous cherchez la définition de « {mot_recherche} ».;{mot_recherche};Reformuler ou ouvrir le module générique;Oui
+QLR_016;;;;;;;;;;SCR_GLO_SEARCH;Je vous montre les ressources sur la laïcité.;{mot_recherche};Reformuler ou ouvrir le module générique;Oui
+QLR_017;;;;;;;;;;SCR_REV_MENU;Je vous oriente vers les révisions adaptées.;{theme};Reformuler ou ouvrir le module générique;Oui
+QLR_018;;;;;;;;;;SCR_ENT_MENU;Je vous oriente vers un entraînement.;"{type_examen}; {theme}";Reformuler ou ouvrir le module générique;Oui
+QLR_019;;;;;;;;;;SCR_PREP_MENU;Je vous oriente vers les examens blancs.;{type_examen};Reformuler ou ouvrir le module générique;Oui
+QLR_020;;;;;;;;;;SCR_CONS_MENU;Je vous montre des méthodes pour mieux mémoriser.;;Reformuler ou ouvrir le module générique;Oui
+QLR_021;;;;;;;;;;SCR_CONS_MENU;Je vous montre des conseils pour gérer le stress.;;Reformuler ou ouvrir le module générique;Oui
+QLR_022;;;;;;;;;;SCR_BIL_MENU;Je vous oriente vers votre bilan de progression.;;Reformuler ou ouvrir le module générique;Oui
+QLR_023;;;;;;;;;;SCR_FAQ_SEARCH;Je recherche votre question dans la FAQ.;;Reformuler ou ouvrir le module générique;Oui
