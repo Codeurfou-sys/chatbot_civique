@@ -1,0 +1,221 @@
+{
+  "generated_at": "2026-08-03T12:39:29+02:00",
+  "links": [
+    {
+      "code_centre": "CLERMONT_FERRAND",
+      "ville": "Clermont-Ferrand",
+      "url": "https://forms.cloud.microsoft/pages/responsepage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChURjEzQVlJWjdUMlFXODhXN1pPR0JGN1RDWCQlQCN0PWcu&route=shorturl",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "LE_PUY_EN_VELAY",
+      "ville": "Le Puy-en-Velay",
+      "url": "https://forms.cloud.microsoft/pages/responsepage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChURjEzQVlJWjdUMlFXODhXN1pPR0JGN1RDWCQlQCN0PWcu&route=shorturl",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "SAINT_FLOUR",
+      "ville": "Saint-Flour",
+      "url": "https://forms.cloud.microsoft/pages/responsepage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChURjEzQVlJWjdUMlFXODhXN1pPR0JGN1RDWCQlQCN0PWcu&route=shorturl",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "VICHY",
+      "ville": "Vichy",
+      "url": "https://forms.cloud.microsoft/pages/responsepage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChURjEzQVlJWjdUMlFXODhXN1pPR0JGN1RDWCQlQCN0PWcu&route=shorturl",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "AUXERRE",
+      "ville": "Auxerre",
+      "url": "https://forms.office.com/pages/responsepage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChUMU5BMzNJTE1ZVzJROEVXWkVTTEtTTjEzUyQlQCN0PWcu&route=shorturl",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "DIJON",
+      "ville": "Dijon",
+      "url": "https://forms.office.com/pages/responsepage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChUMU5BMzNJTE1ZVzJROEVXWkVTTEtTTjEzUyQlQCN0PWcu&route=shorturl",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "MACON",
+      "ville": "Mâcon",
+      "url": "https://forms.office.com/pages/responsepage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChUMU5BMzNJTE1ZVzJROEVXWkVTTEtTTjEzUyQlQCN0PWcu&route=shorturl",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "MONTCEAU_LES_MINES",
+      "ville": "Montceau-les-Mines",
+      "url": "https://forms.office.com/pages/responsepage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChUMU5BMzNJTE1ZVzJROEVXWkVTTEtTTjEzUyQlQCN0PWcu&route=shorturl",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "NEVERS",
+      "ville": "Nevers",
+      "url": "https://forms.office.com/pages/responsepage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChUMU5BMzNJTE1ZVzJROEVXWkVTTEtTTjEzUyQlQCN0PWcu&route=shorturl",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "SENS",
+      "ville": "Sens",
+      "url": "https://forms.office.com/pages/responsepage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChUMU5BMzNJTE1ZVzJROEVXWkVTTEtTTjEzUyQlQCN0PWcu&route=shorturl",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "BOURGES",
+      "ville": "Bourges",
+      "url": "https://forms.office.com/pages/responsepage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChUM09TTktYSFJMSUc4T0lUMUdSRDA5Ukw2RSQlQCN0PWcu&route=shorturl",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "BESANCON",
+      "ville": "Besançon",
+      "url": "https://forms.office.com/Pages/ResponsePage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChUNUo5SUNJN1o2MjVKOEtFVUxPVU9LSElDWCQlQCN0PWcu",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "LONS_LE_SAUNIER",
+      "ville": "Lons-le-Saunier",
+      "url": "https://forms.office.com/Pages/ResponsePage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChUNUo5SUNJN1o2MjVKOEtFVUxPVU9LSElDWCQlQCN0PWcu",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "MONTBELIARD",
+      "ville": "Montbéliard",
+      "url": "https://forms.office.com/Pages/ResponsePage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChUNUo5SUNJN1o2MjVKOEtFVUxPVU9LSElDWCQlQCN0PWcu",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "CHAUMONT",
+      "ville": "Chaumont",
+      "url": "https://forms.office.com/pages/responsepage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChUNlpSVzg1VkxHUlhNVDFBQTk4N0pNUkU1WCQlQCN0PWcu&route=shorturl",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "MULHOUSE",
+      "ville": "Mulhouse",
+      "url": "https://forms.office.com/pages/responsepage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChUNlpSVzg1VkxHUlhNVDFBQTk4N0pNUkU1WCQlQCN0PWcu&route=shorturl",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "REIMS",
+      "ville": "Reims",
+      "url": "https://forms.office.com/pages/responsepage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChUNlpSVzg1VkxHUlhNVDFBQTk4N0pNUkU1WCQlQCN0PWcu&route=shorturl",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "SAINT_DIE_DES_VOSGES",
+      "ville": "Saint-Dié-des-Vosges",
+      "url": "https://forms.office.com/pages/responsepage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChUNlpSVzg1VkxHUlhNVDFBQTk4N0pNUkU1WCQlQCN0PWcu&route=shorturl",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "STRASBOURG",
+      "ville": "Strasbourg",
+      "url": "https://forms.office.com/pages/responsepage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChUNlpSVzg1VkxHUlhNVDFBQTk4N0pNUkU1WCQlQCN0PWcu&route=shorturl",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "TROYES",
+      "ville": "Troyes",
+      "url": "https://forms.office.com/pages/responsepage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChUNlpSVzg1VkxHUlhNVDFBQTk4N0pNUkU1WCQlQCN0PWcu&route=shorturl",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "ANNEMASSE",
+      "ville": "Annemasse",
+      "url": "https://forms.office.com/pages/responsepage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChUMFVWWUZUWDBIV1FOT0xTTU5LTUdKVVlPQiQlQCN0PWcu&route=shorturl",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "ANNECY",
+      "ville": "Annecy",
+      "url": "https://forms.office.com/pages/responsepage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChUMFVWWUZUWDBIV1FOT0xTTU5LTUdKVVlPQiQlQCN0PWcu&route=shorturl",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "BOURG_EN_BRESSE",
+      "ville": "Bourg-en-Bresse",
+      "url": "https://forms.office.com/pages/responsepage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChUMFVWWUZUWDBIV1FOT0xTTU5LTUdKVVlPQiQlQCN0PWcu&route=shorturl",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    },
+    {
+      "code_centre": "VALSERHONE",
+      "ville": "Valserhône",
+      "url": "https://forms.office.com/pages/responsepage.aspx?id=Cf5pfw3SOUOtLY5q0AbYj15YUUzJ44lEjv9UrEuppChUMFVWWUZUWDBIV1FOT0xTTU5LTUdKVVlPQiQlQCN0PWcu&route=shorturl",
+      "valid_syntax": true,
+      "reachable": true,
+      "http_status": 200,
+      "checked_at": "2026-08-03T12:39:27+02:00"
+    }
+  ]
+}

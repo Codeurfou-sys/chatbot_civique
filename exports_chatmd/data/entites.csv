@@ -1,0 +1,40 @@
+﻿type_entite;code;valeur_affichee;variantes_reconnues;departement;region_technique;variable_produite;ecran_destination;priorite;actif;destination_generique
+VILLE;CLERMONT_FERRAND;Clermont-Ferrand;"clermont ferrand; clermont";63;AUVERGNE;{ville};SCR_PASS_CITY_CLERMONT_FERRAND;1;Oui;
+VILLE;LE_PUY_EN_VELAY;Le Puy-en-Velay;"le puy; puy en velay; le puy en velay";43;AUVERGNE;{ville};SCR_PASS_CITY_LE_PUY_EN_VELAY;1;Oui;
+VILLE;SAINT_FLOUR;Saint-Flour;"saint flour; st flour";15;AUVERGNE;{ville};SCR_PASS_CITY_SAINT_FLOUR;1;Oui;
+VILLE;VICHY;Vichy;vichy;03;AUVERGNE;{ville};SCR_PASS_CITY_VICHY;1;Oui;
+VILLE;AUXERRE;Auxerre;auxerre;89;BOURGOGNE;{ville};SCR_PASS_CITY_AUXERRE;1;Oui;
+VILLE;DIJON;Dijon;dijon;21;BOURGOGNE;{ville};SCR_PASS_CITY_DIJON;1;Oui;
+VILLE;MACON;Mâcon;"macon; mâcon";71;BOURGOGNE;{ville};SCR_PASS_CITY_MACON;1;Oui;
+VILLE;MONTCEAU_LES_MINES;Montceau-les-Mines;"montceau; montceau les mines";71;BOURGOGNE;{ville};SCR_PASS_CITY_MONTCEAU_LES_MINES;1;Oui;
+VILLE;NEVERS;Nevers;nevers;58;BOURGOGNE;{ville};SCR_PASS_CITY_NEVERS;1;Oui;
+VILLE;SENS;Sens;sens;89;BOURGOGNE;{ville};SCR_PASS_CITY_SENS;1;Oui;
+VILLE;BOURGES;Bourges;bourges;18;CHER;{ville};SCR_PASS_CITY_BOURGES;1;Oui;
+VILLE;BESANCON;Besançon;"besancon; besançon";25;FRANCHE_COMTE;{ville};SCR_PASS_CITY_BESANCON;1;Oui;
+VILLE;LONS_LE_SAUNIER;Lons-le-Saunier;"lons; lons le saunier";39;FRANCHE_COMTE;{ville};SCR_PASS_CITY_LONS_LE_SAUNIER;1;Oui;
+VILLE;MONTBELIARD;Montbéliard;"montbeliard; montbéliard";25;FRANCHE_COMTE;{ville};SCR_PASS_CITY_MONTBELIARD;1;Oui;
+VILLE;CHAUMONT;Chaumont;chaumont;52;GRAND_EST;{ville};SCR_PASS_CITY_CHAUMONT;1;Oui;
+VILLE;MULHOUSE;Mulhouse;mulhouse;68;GRAND_EST;{ville};SCR_PASS_CITY_MULHOUSE;1;Oui;
+VILLE;REIMS;Reims;reims;51;GRAND_EST;{ville};SCR_PASS_CITY_REIMS;1;Oui;
+VILLE;SAINT_DIE_DES_VOSGES;Saint-Dié-des-Vosges;"saint die; st die; saint die des vosges";88;GRAND_EST;{ville};SCR_PASS_CITY_SAINT_DIE_DES_VOSGES;1;Oui;
+VILLE;STRASBOURG;Strasbourg;"strasbourg; strasbour";67;GRAND_EST;{ville};SCR_PASS_CITY_STRASBOURG;1;Oui;
+VILLE;TROYES;Troyes;troyes;10;GRAND_EST;{ville};SCR_PASS_CITY_TROYES;1;Oui;
+VILLE;ANNEMASSE;Annemasse;annemasse;74;RHONE_ALPES;{ville};SCR_PASS_CITY_ANNEMASSE;1;Oui;
+VILLE;ANNECY;Annecy;annecy;74;RHONE_ALPES;{ville};SCR_PASS_CITY_ANNECY;1;Oui;
+VILLE;BOURG_EN_BRESSE;Bourg-en-Bresse;"bourg en bresse; bourg-en-bresse";01;RHONE_ALPES;{ville};SCR_PASS_CITY_BOURG_EN_BRESSE;1;Oui;
+VILLE;VALSERHONE;Valserhône;"valserhone; valserhône";01;RHONE_ALPES;{ville};SCR_PASS_CITY_VALSERHONE;1;Oui;
+REGION;AUVERGNE;Auvergne;auvergne;;;{region};SCR_PASS_REGION_AUVERGNE;1;Oui;
+REGION;BOURGOGNE;Bourgogne;bourgogne;;;{region};SCR_PASS_REGION_BOURGOGNE;1;Oui;
+REGION;CHER;Cher;"cher; département 18";;;{region};SCR_PASS_REGION_CHER;1;Oui;
+REGION;FRANCHE_COMTE;Franche-Comté;"franche comte; franche-comté";;;{region};SCR_PASS_REGION_FRANCHE_COMTE;1;Oui;
+REGION;GRAND_EST;Grand Est;"grand est; grand-est; alsace";;;{region};SCR_PASS_REGION_GRAND_EST;1;Oui;
+REGION;RHONE_ALPES;Rhône-Alpes;"rhone alpes; rhône-alpes; auvergne rhone alpes";;;{region};SCR_PASS_REGION_RHONE_ALPES;1;Oui;
+TYPE_EXAMEN;CR;Carte de résident;"carte de résident; résident; cr";;;{type_examen};;1;Oui;SCR_PREP_MENU
+TYPE_EXAMEN;CSP;Carte de séjour pluriannuelle;"carte de séjour; pluriannuelle; csp";;;{type_examen};;1;Oui;SCR_PREP_MENU
+TYPE_EXAMEN;NAT;Naturalisation;"naturalisation; nationalité; devenir français";;;{type_examen};;1;Oui;SCR_PREP_MENU
+THEME;T1;Principes et valeurs;"république; valeurs; symboles; laïcité";;;{theme};;2;Oui;SCR_REV_T1_MENU
+THEME;T2;Institutions;"président; gouvernement; parlement; institutions";;;{theme};;2;Oui;SCR_REV_T2_MENU
+THEME;T3;Droits et devoirs;"droits; devoirs; libertés; obligations";;;{theme};;2;Oui;SCR_REV_T3_MENU
+THEME;T4;Histoire, géographie et culture;"histoire; géographie; culture; dates";;;{theme};;2;Oui;SCR_REV_T4_MENU
+THEME;T5;Vie dans la société française;"santé; travail; école; démarches; parentalité";;;{theme};;2;Oui;SCR_REV_T5_MENU
+TERME;LAICITE;Laïcité;"laicite; laïque; religion; neutralité";;;{mot_recherche};;1;Oui;SCR_GLO_SEARCH

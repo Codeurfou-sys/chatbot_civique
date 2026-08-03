@@ -1,0 +1,26 @@
+{
+  "generated_at": "2026-08-03T12:39:29+02:00",
+  "centres_total": 24,
+  "centres_geocodes": 23,
+  "sessions_conservees": 69,
+  "centres_avec_session": 24,
+  "limite_sessions_par_centre": 3,
+  "forms_valides": 24,
+  "forms_invalides_ou_inaccessibles": 0,
+  "sources": {
+    "excel": {
+      "used": true,
+      "sessions_loaded": 107
+    },
+    "json": {
+      "used": false,
+      "sessions_loaded": 0
+    },
+    "frate": {
+      "used": true,
+      "sessions_loaded": 50,
+      "url": "https://frateformation.net/formation/examen-civique/"
+    }
+  },
+  "nearest_centres": []
+}
