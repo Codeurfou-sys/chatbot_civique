@@ -1,7 +1,6 @@
 ---
-titre: Laboratoire ChatMD V7 — modèle définitif du module 07
+titre: Laboratoire ChatMD V8 — quatre syntaxes code postal
 variablesDynamiques: true
-geolocation: true
 plugins: readcsv
 obfuscate: false
 preload:
@@ -9,441 +8,271 @@ preload:
   - https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/centres_frate.csv
 ---
 
-# Laboratoire ChatMD V7
+# Laboratoire ChatMD V8
 
-Ce laboratoire reprend strictement le modèle fonctionnel du chatbot officiel de recherche d’établissements.
+Ce laboratoire compare quatre syntaxes de filtrage pour identifier celle qui fonctionne avec les codes postaux.
 
-1. [Commencer](V7_MENU)
+1. [Commencer le test](V8_MENU)
 
-## V7_MENU
+## V8_MENU
 
-### Choisissez un test
+### Tests disponibles
 
-1. [Rechercher un lieu par ville](V7_VILLE)
-2. [Rechercher un lieu par adresse](V7_ADRESSE)
-3. [Rechercher un lieu par code postal](V7_CP)
-4. [Rechercher un centre FRATE par ville](V7_CENTRE_VILLE)
-5. [Rechercher un centre FRATE par code postal](V7_CENTRE_CP)
-6. [Afficher trois centres proches](V7_GEO)
-7. [Tester le parcours complet du module 07](V7_MODULE)
-8. [Afficher le bilan](V7_BILAN)
+1. [Test A — égalité exacte](V8_TEST_A)
+2. [Test B — includes()](V8_TEST_B)
+3. [Test C — conversion en chaîne avec concaténation](V8_TEST_C)
+4. [Test D — startsWith() avec saisie directe](V8_TEST_D)
+5. [Comparer les quatre résultats](V8_BILAN)
 
 ---
 
-## V7_VILLE
+## V8_TEST_A
 
-`if !@ville`
+### Test A — égalité exacte
 
-D’accord, donne-moi le nom d’une ville.
+`if !@cpA`
 
-Exemples : Strasbourg, Dijon, Colmar, Lyon.
+Saisissez un code postal présent dans le CSV.
+
+Exemples : `67000`, `21000`, `63000`.
 
 `endif`
 
-`if @ville`
+`if @cpA`
 
-`@villePurified = calc(@ville.trim())`
+`@cpAPurified = calc(@cpA.trim())`
 
-### Résultats
+Valeur saisie : **`@cpA`**  
+Valeur nettoyée : **`@cpAPurified`**
 
 ```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/lieux_dits_test.csv
-condition: $2.toLowerCase().includes("`@villePurified`".toLowerCase())
-maxResults: 5
-
-### $i. $2
-
-Code postal : **$1**  
-Adresse : $3  
-Latitude : $4  
-Longitude : $5
-```
-
-`@testVille = réussi`
-`@ville = undefined`
-`@villePurified = undefined`
-
-`endif`
-
-`@ville = @INPUT : V7_VILLE`
-
-1. [Nouvelle recherche par ville](V7_VILLE)
-2. [Retour au menu](V7_MENU)
-
----
-
-## V7_ADRESSE
-
-`if !@adresse`
-
-Donne-moi un mot présent dans une adresse.
-
-Exemples : Jura, Kléber, Darcy, République.
-
-`endif`
-
-`if @adresse`
-
-`@adressePurified = calc(@adresse.trim())`
-
-### Résultats
-
-```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/lieux_dits_test.csv
-condition: $3.toLowerCase().includes("`@adressePurified`".toLowerCase())
-maxResults: 5
-
-### $i. $3
-
-Ville : **$2**  
-Code postal : $1  
-Latitude : $4  
-Longitude : $5
-```
-
-`@testAdresse = réussi`
-`@adresse = undefined`
-`@adressePurified = undefined`
-
-`endif`
-
-`@adresse = @INPUT : V7_ADRESSE`
-
-1. [Nouvelle recherche par adresse](V7_ADRESSE)
-2. [Retour au menu](V7_MENU)
-
----
-
-## V7_CP
-
-`if !@codePostal`
-
-Donne-moi un code postal à cinq chiffres.
-
-Exemples : 67000, 21000, 63000.
-
-`endif`
-
-`if @codePostal`
-
-`@codePostalPurified = calc(@codePostal.trim())`
-
-### Résultats BAN
-
-```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/lieux_dits_test.csv
-condition: $1.startsWith("`@codePostalPurified`")
-sort: $2 asc alph
+condition: $1 == "`@cpAPurified`"
 maxResults: 5
 
 ### $i. $2 — $1
 
 Adresse : $3  
-Latitude : $4  
-Longitude : $5
+Coordonnées : $4, $5
 ```
 
-`@testCP = réussi`
-`@codePostal = undefined`
-`@codePostalPurified = undefined`
+`@resultatA = réussi si des lignes apparaissent`
+
+`@cpA = undefined`
+`@cpAPurified = undefined`
 
 `endif`
 
-`@codePostal = @INPUT : V7_CP`
+`@cpA = @INPUT : V8_TEST_A`
 
-1. [Nouvelle recherche par code postal](V7_CP)
-2. [Retour au menu](V7_MENU)
+1. [Recommencer le test A](V8_TEST_A)
+2. [Retour au menu](V8_MENU)
 
 ---
 
-## V7_CENTRE_VILLE
+## V8_TEST_B
 
-`if !@centreVille`
+### Test B — recherche avec `.includes()`
 
-Dans quelle ville recherchez-vous un centre FRATE ?
+`if !@cpB`
+
+Saisissez un code postal présent dans le CSV.
 
 `endif`
 
-`if @centreVille`
+`if @cpB`
 
-`@centreVillePurified = calc(@centreVille.trim())`
+`@cpBPurified = calc(@cpB.trim())`
 
-### Centre trouvé
+Valeur saisie : **`@cpB`**  
+Valeur nettoyée : **`@cpBPurified`**
+
+```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/lieux_dits_test.csv
+condition: $1.includes("`@cpBPurified`")
+maxResults: 5
+
+### $i. $2 — $1
+
+Adresse : $3  
+Coordonnées : $4, $5
+```
+
+`@resultatB = réussi si des lignes apparaissent`
+
+`@cpB = undefined`
+`@cpBPurified = undefined`
+
+`endif`
+
+`@cpB = @INPUT : V8_TEST_B`
+
+1. [Recommencer le test B](V8_TEST_B)
+2. [Retour au menu](V8_MENU)
+
+---
+
+## V8_TEST_C
+
+### Test C — conversion en chaîne par concaténation
+
+`if !@cpC`
+
+Saisissez un code postal présent dans le CSV.
+
+`endif`
+
+`if @cpC`
+
+`@cpCPurified = calc(@cpC.trim())`
+
+Valeur saisie : **`@cpC`**  
+Valeur nettoyée : **`@cpCPurified`**
+
+```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/lieux_dits_test.csv
+condition: ($1+"").startsWith("`@cpCPurified`")
+maxResults: 5
+
+### $i. $2 — $1
+
+Adresse : $3  
+Coordonnées : $4, $5
+```
+
+`@resultatC = réussi si des lignes apparaissent`
+
+`@cpC = undefined`
+`@cpCPurified = undefined`
+
+`endif`
+
+`@cpC = @INPUT : V8_TEST_C`
+
+1. [Recommencer le test C](V8_TEST_C)
+2. [Retour au menu](V8_MENU)
+
+---
+
+## V8_TEST_D
+
+### Test D — `startsWith()` avec variable saisie directement
+
+Ce test reprend au plus près le modèle officiel UAI, sans variable intermédiaire dans la condition.
+
+`if !@cpD`
+
+Saisissez un code postal présent dans le CSV.
+
+`endif`
+
+`if @cpD`
+
+Valeur saisie : **`@cpD`**
+
+```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/lieux_dits_test.csv
+condition: $1.startsWith("`@cpD`")
+maxResults: 5
+
+### $i. $2 — $1
+
+Adresse : $3  
+Coordonnées : $4, $5
+```
+
+`@resultatD = réussi si des lignes apparaissent`
+
+`@cpD = undefined`
+
+`endif`
+
+`@cpD = @INPUT : V8_TEST_D`
+
+1. [Recommencer le test D](V8_TEST_D)
+2. [Retour au menu](V8_MENU)
+
+---
+
+## V8_CENTRES
+
+### Vérification complémentaire sur le CSV FRATE
+
+Cette section permet de réutiliser la syntaxe gagnante sur la colonne `$3` du fichier des centres.
+
+`if !@cpCentre`
+
+Saisissez un code postal de centre : `67000`, `21000`, `63000`.
+
+`endif`
+
+`if @cpCentre`
+
+`@cpCentrePurified = calc(@cpCentre.trim())`
+
+#### Égalité exacte
 
 ```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/centres_frate.csv
-condition: $2.toLowerCase().includes("`@centreVillePurified`".toLowerCase())
+condition: $3 == "`@cpCentrePurified`"
 maxResults: 5
 
 ### Centre de $2
 
-Code postal : **$3**  
+Code postal : $3  
 Région : $4  
-Coordonnées : $5, $6  
-
-[Ouvrir l’inscription](link:$7)  
-[Voir sur OpenStreetMap](https://www.openstreetmap.org/?#map=14/$5/$6)
+[Inscription](link:$7)
 ```
 
-`@testCentreVille = réussi`
-`@centreVille = undefined`
-`@centreVillePurified = undefined`
-
-`endif`
-
-`@centreVille = @INPUT : V7_CENTRE_VILLE`
-
-1. [Nouvelle recherche par ville](V7_CENTRE_VILLE)
-2. [Retour au menu](V7_MENU)
-
----
-
-## V7_CENTRE_CP
-
-`if !@centreCodePostal`
-
-Quel est le code postal du centre recherché ?
-
-`endif`
-
-`if @centreCodePostal`
-
-`@centreCodePostalPurified = calc(@centreCodePostal.trim())`
-
-### Centre trouvé
+#### includes()
 
 ```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/centres_frate.csv
-condition: $3.startsWith("`@centreCodePostalPurified`")
+condition: $3.includes("`@cpCentrePurified`")
 maxResults: 5
 
 ### Centre de $2
 
-Code postal : **$3**  
-Région : $4  
-Coordonnées : $5, $6  
-
-[Ouvrir l’inscription](link:$7)  
-[Voir sur OpenStreetMap](https://www.openstreetmap.org/?#map=14/$5/$6)
-```
-
-`@testCentreCP = réussi`
-`@centreCodePostal = undefined`
-`@centreCodePostalPurified = undefined`
-
-`endif`
-
-`@centreCodePostal = @INPUT : V7_CENTRE_CP`
-
-1. [Nouvelle recherche par code postal](V7_CENTRE_CP)
-2. [Retour au menu](V7_MENU)
-
----
-
-## V7_GEO
-
-### Trois centres proches de votre position
-
-Latitude : **`@LATITUDE`**  
-Longitude : **`@LONGITUDE`**  
-Précision : **`@POSITION_ACCURACY`** mètres
-
-`if @LATITUDE != undefined && @LONGITUDE != undefined`
-
-```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/centres_frate.csv
-condition: Math.abs($5-`@LATITUDE`)<4 && Math.abs($6-`@LONGITUDE`)<4
-maxResults: 3
-
-### $i. Centre de $2
-
 Code postal : $3  
-Région : $4  
-Coordonnées : $5, $6  
-
-[Ouvrir l’inscription](link:$7)  
-[Voir sur OpenStreetMap](https://www.openstreetmap.org/?#map=14/$5/$6)
+Région : $4
 ```
 
-`@testGeo = réussi`
-
-`endif`
-
-`if @LATITUDE == undefined || @LONGITUDE == undefined`
-
-La géolocalisation n’est pas disponible. Autorisez-la dans le navigateur, puis rechargez la page.
-
-`@testGeo = indisponible`
-
-`endif`
-
-1. [Retour au menu](V7_MENU)
-
----
-
-## V7_MODULE
-
-# Passer mon examen
-
-Comment souhaitez-vous effectuer votre recherche ?
-
-1. [Par ville](V7_MODULE_VILLE)
-2. [Par code postal](V7_MODULE_CP)
-3. [Avec ma géolocalisation](V7_MODULE_GEO)
-4. [Retour au menu du laboratoire](V7_MENU)
-
-## V7_MODULE_VILLE
-
-`if !@moduleVille`
-
-Dans quelle ville souhaitez-vous passer l’examen ?
-
-`endif`
-
-`if @moduleVille`
-
-`@moduleVillePurified = calc(@moduleVille.trim())`
-
-### Localisation reconnue
-
-```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/lieux_dits_test.csv
-condition: $2.toLowerCase().includes("`@moduleVillePurified`".toLowerCase())
-maxResults: 3
-
-$i. **$2 — $1**  
-$3
-```
-
-### Centre FRATE correspondant
+#### Conversion puis startsWith()
 
 ```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/centres_frate.csv
-condition: $2.toLowerCase().includes("`@moduleVillePurified`".toLowerCase())
-maxResults: 3
+condition: ($3+"").startsWith("`@cpCentrePurified`")
+maxResults: 5
 
 ### Centre de $2
 
 Code postal : $3  
-Région : $4  
-
-[Ouvrir l’inscription](link:$7)  
-[Voir sur OpenStreetMap](https://www.openstreetmap.org/?#map=14/$5/$6)
+Région : $4
 ```
 
-`@testModuleVille = réussi`
-`@moduleVille = undefined`
-`@moduleVillePurified = undefined`
+`@cpCentre = undefined`
+`@cpCentrePurified = undefined`
 
 `endif`
 
-`@moduleVille = @INPUT : V7_MODULE_VILLE`
+`@cpCentre = @INPUT : V8_CENTRES`
 
-1. [Nouvelle recherche](V7_MODULE_VILLE)
-2. [Retour au module](V7_MODULE)
-
-## V7_MODULE_CP
-
-`if !@moduleCodePostal`
-
-Quel est votre code postal ?
-
-`endif`
-
-`if @moduleCodePostal`
-
-`@moduleCodePostalPurified = calc(@moduleCodePostal.trim())`
-
-### Localisation reconnue
-
-```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/lieux_dits_test.csv
-condition: $1.startsWith("`@moduleCodePostalPurified`")
-maxResults: 3
-
-$i. **$2 — $1**  
-$3
-```
-
-### Centre FRATE correspondant
-
-```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/centres_frate.csv
-condition: $3.startsWith("`@moduleCodePostalPurified`")
-maxResults: 3
-
-### Centre de $2
-
-Code postal : $3  
-Région : $4  
-
-[Ouvrir l’inscription](link:$7)  
-[Voir sur OpenStreetMap](https://www.openstreetmap.org/?#map=14/$5/$6)
-```
-
-`@testModuleCP = réussi`
-`@moduleCodePostal = undefined`
-`@moduleCodePostalPurified = undefined`
-
-`endif`
-
-`@moduleCodePostal = @INPUT : V7_MODULE_CP`
-
-1. [Nouvelle recherche](V7_MODULE_CP)
-2. [Retour au module](V7_MODULE)
-
-## V7_MODULE_GEO
-
-### Centres proposés selon votre position
-
-Latitude : **`@LATITUDE`**  
-Longitude : **`@LONGITUDE`**
-
-`if @LATITUDE != undefined && @LONGITUDE != undefined`
-
-```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/centres_frate.csv
-condition: Math.abs($5-`@LATITUDE`)<4 && Math.abs($6-`@LONGITUDE`)<4
-maxResults: 3
-
-### $i. Centre de $2
-
-Code postal : $3  
-Région : $4  
-
-[Ouvrir l’inscription](link:$7)  
-[Voir sur OpenStreetMap](https://www.openstreetmap.org/?#map=14/$5/$6)
-```
-
-`@testModuleGeo = réussi`
-
-`endif`
-
-`if @LATITUDE == undefined || @LONGITUDE == undefined`
-
-La géolocalisation n’a pas pu être utilisée.
-
-`endif`
-
-1. [Retour au module](V7_MODULE)
+1. [Recommencer la vérification FRATE](V8_CENTRES)
+2. [Retour au menu](V8_MENU)
 
 ---
 
-## V7_BILAN
+## V8_BILAN
 
-# Bilan du laboratoire V7
+# Comparaison des résultats
 
-| Fonction | Résultat |
-|---|---|
-| Recherche BAN par ville | `@testVille` |
-| Recherche BAN par adresse | `@testAdresse` |
-| Recherche BAN par code postal | `@testCP` |
-| Centre FRATE par ville | `@testCentreVille` |
-| Centre FRATE par code postal | `@testCentreCP` |
-| Géolocalisation | `@testGeo` |
-| Module 07 par ville | `@testModuleVille` |
-| Module 07 par code postal | `@testModuleCP` |
-| Module 07 par géolocalisation | `@testModuleGeo` |
+| Test | Syntaxe | Résultat |
+|---|---|---|
+| A | `$1 == "variable"` | `@resultatA` |
+| B | `$1.includes("variable")` | `@resultatB` |
+| C | `($1+"").startsWith("variable")` | `@resultatC` |
+| D | `$1.startsWith("@cpD")` sans variable intermédiaire | `@resultatD` |
 
-### Résultat attendu
+### Interprétation
 
-La version V7 doit confirmer définitivement :
+- Si **A** fonctionne, retenir l’égalité exacte pour les codes postaux.
+- Si **B** fonctionne, retenir `.includes()`.
+- Si **C** fonctionne, cela confirme que la colonne est numérique et doit être convertie en chaîne.
+- Si **D** fonctionne, le problème venait de la variable intermédiaire ou de son ordre d’évaluation.
+- Si plusieurs tests fonctionnent, retenir **A**, car c’est la syntaxe la plus simple et la plus précise.
 
-- la recherche par code postal ;
-- la recherche par ville ;
-- la recherche par adresse ;
-- la récupération des centres FRATE ;
-- les liens d’inscription et de cartographie ;
-- l’exploitation de la géolocalisation ;
-- le fonctionnement du futur module 07 avec la syntaxe officielle ChatMD.
-
-1. [Retour au menu](V7_MENU)
+1. [Tester les mêmes syntaxes sur les centres FRATE](V8_CENTRES)
+2. [Retour au menu](V8_MENU)
