@@ -1,569 +1,376 @@
 ---
-titre: Laboratoire ChatMD V4
+titre: Laboratoire ChatMD V5 — readcsv, BAN et centres FRATE
 variablesDynamiques: true
 geolocation: true
+plugins: readcsv
 obfuscate: false
 gestionGrosMots: false
 rechercheContenu: false
+
+# IMPORTANT
+# Remplacez les deux URL ci-dessous dans tout le fichier avant le test :
+# URL_BAN_RAW = URL Raw GitHub du CSV BAN réduit
+# URL_CENTRES_RAW = URL Raw GitHub du CSV des centres FRATE
+#
+# Exemple :
+# https://raw.githubusercontent.com/UTILISATEUR/DEPOT/main/data/ban_reduit.csv
+# https://raw.githubusercontent.com/UTILISATEUR/DEPOT/main/data/centres_frate.csv
+
+preload:
+  - URL_BAN_RAW
+  - URL_CENTRES_RAW
 ---
 
-# Laboratoire ChatMD V4
+# Laboratoire ChatMD V5
 
-Ce laboratoire vérifie les fonctions encore décisives pour le module **Passer mon examen** et la rubrique **Pose-moi une question**.
+Ce laboratoire vérifie si le plugin officiel `readcsv` peut alimenter le module **Passer mon examen** à partir de données externes.
 
-1. [Commencer les tests](MENU)
+1. [Commencer le laboratoire](V5_MENU)
 
-## MENU
+## V5_MENU
 
-### Tests prioritaires
+### Tests disponibles
 
-1. [Test 1 — Détection avec includes()](T1_INPUT)
-2. [Test 2 — startsWith() et endsWith()](T2_INPUT)
-3. [Test 3 — mainTopic()](T3_INPUT)
-4. [Test 4 — URL dynamique vers la BAN](T4_INPUT)
-5. [Test 5 — Géolocalisation](T5_GEO)
-6. [Test 6 — Paramètre d’URL @GET](T6_GET)
-7. [Test 7 — Navigation conditionnelle](T7_CHOICE)
-8. [Test 8 — readcsv expérimental](T8_CSV)
-9. [Test 9 — Mini-parcours Module 07](T9_START)
-10. [Afficher le bilan](REPORT)
+1. [Test 1 — Vérifier le chargement du CSV BAN](V5_BAN_LOAD)
+2. [Test 2 — Rechercher une commune ou un lieu-dit](V5_BAN_INPUT)
+3. [Test 3 — Rechercher un code postal](V5_CP_INPUT)
+4. [Test 4 — Vérifier le CSV des centres FRATE](V5_CENTRES_LOAD)
+5. [Test 5 — Afficher des centres autour d’une position](V5_GEO)
+6. [Test 6 — Tentative de classement des trois centres](V5_NEAREST)
+7. [Test 7 — Parcours complet simulé](V5_FULL_INPUT)
+8. [Afficher le bilan](V5_REPORT)
 
-## T1_INPUT
+---
 
-### Test 1 — Détection avec `.includes()`
+## V5_BAN_LOAD
 
-Saisissez exactement l’une des phrases suivantes :
+### Test 1 — Chargement du CSV BAN
 
-- prochaines dates à Strasbourg
-- centre proche de Dijon
-- prix de l’examen
+Le bloc suivant doit afficher au maximum trois lignes du fichier BAN.
 
-!Next: T1_RESULT
+```readcsv URL_BAN_RAW
+maxResults: 3
 
-1. [Retour au menu](MENU)
+$i. **$5** — code postal : **$3**
+Coordonnées : latitude **$11**, longitude **$10**
+Lieu-dit : $2
+```
 
-## T1_RESULT
+`@testBanLoad = à vérifier`
 
-`@phrase = calc(@INPUT.trim().toLowerCase())`
-`@contientDate = calc(@phrase.includes("date"))`
-`@contientStrasbourg = calc(@phrase.includes("strasbourg"))`
-`@contientCentre = calc(@phrase.includes("centre"))`
-`@contientProche = calc(@phrase.includes("proche"))`
-`@contientPrix = calc(@phrase.includes("prix"))`
+1. [Retour au menu](V5_MENU)
 
-Phrase normalisée : **`@phrase`**
+---
 
-- contient « date » : **`@contientDate`**
-- contient « strasbourg » : **`@contientStrasbourg`**
-- contient « centre » : **`@contientCentre`**
-- contient « proche » : **`@contientProche`**
-- contient « prix » : **`@contientPrix`**
+## V5_BAN_INPUT
 
-`if @contientDate == true && @contientStrasbourg == true`
+### Test 2 — Recherche d’une commune ou d’un lieu-dit
 
-✅ Intention détectée : **prochaines dates à Strasbourg**.
+Écrivez une commune ou un lieu-dit dans la zone principale de ChatMD.
 
-`@intention = QL_DATE_VILLE`
-`@villeDetectee = Strasbourg`
-`@testIncludes = réussi`
+Exemples :
 
-`endif`
+- Strasbourg
+- Bourges
+- Clermont-Ferrand
+- Oberlin
 
-`if @contientCentre == true && @contientProche == true`
+!Next: V5_BAN_RESULTS
 
-✅ Intention détectée : **centre le plus proche**.
+1. [Retour au menu](V5_MENU)
 
-`@intention = QL_CENTRE_PROCHE`
-`@testIncludes = réussi`
+## V5_BAN_RESULTS
 
-`endif`
+`@rechercheBan = calc(@INPUT.trim().toLowerCase())`
+`@sujetBan = calc(mainTopic(@rechercheBan))`
 
-`if @contientPrix == true`
+Recherche normalisée : **`@rechercheBan`**
 
-✅ Intention détectée : **prix de l’examen**.
+Sujet principal : **`@sujetBan`**
 
-`@intention = QL_PRIX`
-`@testIncludes = réussi`
+### Résultats trouvés
 
-`endif`
+```readcsv URL_BAN_RAW
+condition: $2.toLowerCase().includes(mainTopic("@INPUT").toLowerCase()) || $5.toLowerCase().includes(mainTopic("@INPUT").toLowerCase())
+maxResults: 5
 
-Intention produite : **`@intention`**
+### $i. $5
 
-1. [Recommencer](T1_INPUT)
-2. [Retour au menu](MENU)
+- Lieu-dit : $2
+- Code postal : $3
+- Commune : $5
+- Longitude : $10
+- Latitude : $11
+```
 
-## T2_INPUT
+`@testBanSearch = à vérifier`
 
-### Test 2 — `startsWith()` et `endsWith()`
+1. [Faire une autre recherche](V5_BAN_INPUT)
+2. [Retour au menu](V5_MENU)
 
-Saisissez exactement :
+---
 
-**je cherche une session à Strasbourg**
+## V5_CP_INPUT
 
-!Next: T2_RESULT
+### Test 3 — Recherche par code postal
 
-1. [Retour au menu](MENU)
+Saisissez exactement un code postal à cinq chiffres.
 
-## T2_RESULT
+!Next: V5_CP_RESULTS
 
-`@phrase2 = calc(@INPUT.trim().toLowerCase())`
-`@commenceJe = calc(@phrase2.startsWith("je"))`
-`@finitStrasbourg = calc(@phrase2.endsWith("strasbourg"))`
+1. [Retour au menu](V5_MENU)
 
-Phrase : **`@phrase2`**
+## V5_CP_RESULTS
 
-- commence par « je » : **`@commenceJe`**
-- finit par « strasbourg » : **`@finitStrasbourg`**
+`@codePostalBan = calc(@INPUT.trim())`
 
-`if @commenceJe == true`
+Code postal recherché : **`@codePostalBan`**
 
-✅ `startsWith()` fonctionne.
+```readcsv URL_BAN_RAW
+condition: $3 == "@codePostalBan"
+sort: $5 asc alph
+maxResults: 5
 
-`@testStartsWith = réussi`
+$i. **$5** — $3  
+Lieu-dit : $2  
+Coordonnées : $11, $10
+```
 
-`endif`
+`@testBanCP = à vérifier`
 
-`if @finitStrasbourg == true`
+1. [Rechercher un autre code postal](V5_CP_INPUT)
+2. [Retour au menu](V5_MENU)
 
-✅ `endsWith()` fonctionne.
+---
 
-`@testEndsWith = réussi`
+## V5_CENTRES_LOAD
 
-`endif`
+### Test 4 — Chargement du CSV des centres FRATE
 
-1. [Retour au menu](MENU)
+Structure attendue du fichier `centres_frate.csv` :
 
-## T3_INPUT
+```csv
+centre_id;ville;departement;region;latitude;longitude;lien_inscription
+STRASBOURG;Strasbourg;67;Grand Est;48.5734;7.7521;https://...
+DIJON;Dijon;21;Bourgogne;47.3220;5.0415;https://...
+CLERMONT_FERRAND;Clermont-Ferrand;63;Auvergne;45.7772;3.0870;https://...
+```
 
-### Test 3 — `mainTopic()`
+Lecture du fichier :
 
-Saisissez une phrase courte, par exemple :
+```readcsv URL_CENTRES_RAW
+sort: $2 asc alph
+maxResults: 5
 
-**Je voudrais connaître les prochaines dates d’examen à Strasbourg**
+$i. **$2 ($3)**  
+Région : $4  
+Coordonnées : $5, $6  
+[Inscription](link:$7)
+```
 
-!Next: T3_RESULT
+`@testCentresLoad = à vérifier`
 
-1. [Retour au menu](MENU)
+1. [Retour au menu](V5_MENU)
 
-## T3_RESULT
+---
 
-`@phraseSujet = calc(@INPUT.trim())`
-`@sujetPrincipal = calc(mainTopic(@phraseSujet))`
+## V5_GEO
 
-Phrase analysée : **`@phraseSujet`**
+### Test 5 — Centres autour de la géolocalisation
 
-Sujet principal extrait : **`@sujetPrincipal`**
+Latitude de l’utilisateur : **`@LATITUDE`**
 
-`if @sujetPrincipal != undefined && @sujetPrincipal.trim().length()>0`
-
-✅ `mainTopic()` a renvoyé une valeur.
-
-`@testMainTopic = réussi`
-
-`endif`
-
-`if !@sujetPrincipal || @sujetPrincipal.trim().length()==0`
-
-❌ Aucun sujet principal n’a été extrait.
-
-`@testMainTopic = échoué`
-
-`endif`
-
-1. [Retour au menu](MENU)
-
-## T4_INPUT
-
-### Test 4 — URL dynamique vers la BAN
-
-Saisissez une commune ou un code postal dans le champ, puis appuyez sur **Entrée**.
-
-<label for="localisation">Localisation :</label>
-
-<input type="text" id="localisation" name="localisation" value="`@localisation`" placeholder="Exemple : Strasbourg ou 67000" />
-
-`if @localisation != undefined && @localisation.trim().length()>0`
-
-`@localisationEncodee = calc(encodeURI(@localisation.trim()))`
-
-Valeur saisie : **`@localisation`**
-
-Valeur encodée : **`@localisationEncodee`**
-
-### Variante A — lien Markdown dynamique
-
-[Tester la BAN — variante A](https://api-adresse.data.gouv.fr/search/?q=`@localisationEncodee`&limit=3)
-
-### Variante B — bouton externe ChatMD
-
-1. [Tester la BAN — variante B](link:https://api-adresse.data.gouv.fr/search/?q=`@localisationEncodee`&limit=3)
-
-### Variante C — lien HTML
-
-<a href="https://api-adresse.data.gouv.fr/search/?q=`@localisationEncodee`&limit=3" target="_blank" rel="noopener">Tester la BAN — variante C</a>
-
-`@testUrlDynamique = à vérifier`
-
-`endif`
-
-`if !@localisation || @localisation.trim().length()==0`
-
-Saisissez d’abord une commune ou un code postal.
-
-`endif`
-
-1. [Retour au menu](MENU)
-
-## T5_GEO
-
-### Test 5 — Géolocalisation
-
-Le YAML contient :
-
-- `variablesDynamiques: true`
-- `geolocation: true`
-
-Latitude : **`@LATITUDE`**
-
-Longitude : **`@LONGITUDE`**
+Longitude de l’utilisateur : **`@LONGITUDE`**
 
 Précision : **`@POSITION_ACCURACY`** mètres
 
 `if @LATITUDE != undefined && @LONGITUDE != undefined`
 
-✅ La géolocalisation a fourni des coordonnées.
+✅ La géolocalisation est disponible.
 
-`@testGeo = réussi`
+Le filtre ci-dessous conserve les centres situés dans un carré géographique d’environ deux degrés autour de la position.  
+Il s’agit d’un **préfiltrage**, pas encore d’un classement exact par distance.
+
+```readcsv URL_CENTRES_RAW
+condition: Math.abs($5-@LATITUDE)<2 && Math.abs($6-@LONGITUDE)<2
+maxResults: 10
+
+$i. **$2 ($3)**  
+Région : $4  
+Latitude : $5 — Longitude : $6  
+[Inscription](link:$7)
+```
+
+`@testGeoCentres = à vérifier`
 
 `endif`
 
 `if @LATITUDE == undefined || @LONGITUDE == undefined`
 
-⚠️ La géolocalisation n’a pas fourni de coordonnées. Vérifiez l’autorisation du navigateur, puis rechargez complètement la page.
+La géolocalisation n’est pas disponible. Autorisez-la dans le navigateur puis rechargez la page.
 
-`@testGeo = échoué ou refusé`
-
-`endif`
-
-`if @LATITUDE>41 && @LATITUDE<52 && @LONGITUDE>-6 && @LONGITUDE<10`
-
-La position semble se trouver en France métropolitaine.
+`@testGeoCentres = géolocalisation indisponible`
 
 `endif`
 
-`if Math.abs(@LATITUDE-48.5734)<0.5 && Math.abs(@LONGITUDE-7.7521)<0.5`
+1. [Retour au menu](V5_MENU)
 
-La position semble proche de Strasbourg.
+---
 
-`endif`
+## V5_NEAREST
 
-1. [Recharger ce test](T5_GEO)
-2. [Retour au menu](MENU)
+### Test 6 — Tentative de classement des trois centres les plus proches
 
-## T6_GET
-
-### Test 6 — Paramètre d’URL `@GET`
-
-Pour tester, ajoutez à l’URL du laboratoire :
+ChatMD documente le tri sur une **colonne** :
 
 ```text
-?departement=67
+sort: $5 asc num
 ```
 
-Si l’URL contient déjà un paramètre, ajoutez :
+La documentation ne confirme pas officiellement le tri sur une formule calculée.  
+Les trois variantes suivantes permettent de déterminer ce que la version actuelle accepte.
 
-```text
-&departement=67
+`if @LATITUDE != undefined && @LONGITUDE != undefined`
+
+### Variante A — Préfiltrage puis ordre du CSV
+
+```readcsv URL_CENTRES_RAW
+condition: Math.abs($5-@LATITUDE)<4 && Math.abs($6-@LONGITUDE)<4
+maxResults: 3
+
+$i. **$2** — $4  
+Coordonnées : $5, $6
 ```
 
-Valeur de `@GETdepartement` : **`@GETdepartement`**
+### Variante B — Tri expérimental par distance au carré
 
-`if @GETdepartement == "67"`
+```readcsv URL_CENTRES_RAW
+condition: Math.abs($5-@LATITUDE)<4 && Math.abs($6-@LONGITUDE)<4
+sort: calc((($5-@LATITUDE)*($5-@LATITUDE))+(($6-@LONGITUDE)*($6-@LONGITUDE))) asc num
+maxResults: 3
 
-✅ Le paramètre `departement=67` est reconnu.
-
-`@testGET = réussi`
-
-`endif`
-
-`if @GETdepartement == undefined`
-
-Aucun paramètre `departement` n’est actuellement présent dans l’URL.
-
-`@testGET = non testé`
-
-`endif`
-
-1. [Retour au menu](MENU)
-
-## T7_CHOICE
-
-### Test 7 — Navigation conditionnelle
-
-Choisissez une région.
-
-1. [Grand Est @regionTest=GRAND_EST](T7_ROUTE)
-2. [Bourgogne @regionTest=BOURGOGNE](T7_ROUTE)
-3. [Auvergne @regionTest=AUVERGNE](T7_ROUTE)
-4. [Retour au menu](MENU)
-
-## T7_ROUTE
-
-Région mémorisée : **`@regionTest`**
-
-`if @regionTest == "GRAND_EST"`
-
-✅ La condition Grand Est est satisfaite.
-
-1. [Ouvrir l’écran Strasbourg](T7_STRASBOURG)
-
-`endif`
-
-`if @regionTest == "BOURGOGNE"`
-
-✅ La condition Bourgogne est satisfaite.
-
-1. [Ouvrir l’écran Dijon](T7_DIJON)
-
-`endif`
-
-`if @regionTest == "AUVERGNE"`
-
-✅ La condition Auvergne est satisfaite.
-
-1. [Ouvrir l’écran Clermont-Ferrand](T7_CLERMONT)
-
-`endif`
-
-`@testNavigationConditionnelle = réussi`
-
-1. [Retour au menu](MENU)
-
-## T7_STRASBOURG
-
-### Strasbourg
-
-La navigation conditionnelle vers Strasbourg fonctionne.
-
-1. [Retour au menu](MENU)
-
-## T7_DIJON
-
-### Dijon
-
-La navigation conditionnelle vers Dijon fonctionne.
-
-1. [Retour au menu](MENU)
-
-## T7_CLERMONT
-
-### Clermont-Ferrand
-
-La navigation conditionnelle vers Clermont-Ferrand fonctionne.
-
-1. [Retour au menu](MENU)
-
-## T8_CSV
-
-### Test 8 — Plugin `readcsv` expérimental
-
-Ce laboratoire n’invente pas de syntaxe non vérifiée.
-
-Le test préparatoire consiste à publier sur GitHub un fichier nommé :
-
-```text
-laboratoire_centres.csv
+$i. **$2** — $4  
+Coordonnées : $5, $6
 ```
 
-avec ce contenu :
+### Variante C — Affichage expérimental de la distance au carré
 
-```csv
-code_postal,ville,ecran,region
-67000,Strasbourg,T8_STRASBOURG,Grand Est
-21000,Dijon,T8_DIJON,Bourgogne
-63000,Clermont-Ferrand,T8_CLERMONT,Auvergne
+```readcsv URL_CENTRES_RAW
+condition: Math.abs($5-@LATITUDE)<4 && Math.abs($6-@LONGITUDE)<4
+maxResults: 3
+
+$i. **$2** — $4  
+Distance expérimentale : calc((($5-@LATITUDE)*($5-@LATITUDE))+(($6-@LONGITUDE)*($6-@LONGITUDE)))
 ```
 
-Objectifs du futur test `readcsv` :
-
-1. charger le CSV depuis son URL Raw ;
-2. rechercher une ligne à partir de `@localisation` ;
-3. afficher la ville trouvée ;
-4. récupérer l’identifiant d’écran ;
-5. diriger l’utilisateur vers cet écran.
-
-Statut actuel : **syntaxe d’appel à confirmer depuis un exemple ChatMD officiel opérationnel**.
-
-`@testCSV = en attente de syntaxe officielle`
-
-1. [Voir les écrans de contrôle](T8_CONTROL)
-2. [Retour au menu](MENU)
-
-## T8_CONTROL
-
-1. [Écran Strasbourg](T8_STRASBOURG)
-2. [Écran Dijon](T8_DIJON)
-3. [Écran Clermont-Ferrand](T8_CLERMONT)
-4. [Retour au menu](MENU)
-
-## T8_STRASBOURG
-
-Résultat CSV attendu : **Strasbourg — 67000 — Grand Est**
-
-1. [Retour au menu](MENU)
-
-## T8_DIJON
-
-Résultat CSV attendu : **Dijon — 21000 — Bourgogne**
-
-1. [Retour au menu](MENU)
-
-## T8_CLERMONT
-
-Résultat CSV attendu : **Clermont-Ferrand — 63000 — Auvergne**
-
-1. [Retour au menu](MENU)
-
-## T9_START
-
-### Test 9 — Mini-parcours Module 07
-
-Ce test reproduit un parcours simplifié du futur module.
-
-<label for="typeExamenTest">Type d’examen :</label>
-
-<select name="typeExamenTest" id="typeExamenTest" data-selected="`@typeExamenTest`">
-  <option value="">À sélectionner</option>
-  <option value="CR">Carte de résident</option>
-  <option value="CSP">Carte de séjour pluriannuelle</option>
-  <option value="NAT">Naturalisation</option>
-</select>
-
-<label for="villeTest">Ville ou code postal :</label>
-
-<input type="text" id="villeTest" name="villeTest" value="`@villeTest`" placeholder="Exemple : Strasbourg ou 67000" />
-
-`if @typeExamenTest != undefined && @typeExamenTest != "" && @villeTest != undefined && @villeTest.trim().length()>0`
-
-`@villeTestNorm = calc(@villeTest.trim().toLowerCase())`
-`@estStrasbourg = calc(@villeTestNorm.includes("strasbourg") || @villeTestNorm=="67000")`
-`@estDijon = calc(@villeTestNorm.includes("dijon") || @villeTestNorm=="21000")`
-
-1. [Analyser ma demande](T9_ROUTE)
+`@testNearest = à vérifier`
 
 `endif`
 
-`if @typeExamenTest == undefined || @typeExamenTest == "" || @villeTest == undefined || @villeTest.trim().length()==0`
+`if @LATITUDE == undefined || @LONGITUDE == undefined`
 
-Sélectionnez un examen et saisissez une ville ou un code postal.
-
-`endif`
-
-1. [Retour au menu](MENU)
-
-## T9_ROUTE
-
-Type d’examen : **`@typeExamenTest`**
-
-Localisation : **`@villeTest`**
-
-`if @estStrasbourg == true`
-
-✅ Strasbourg a été reconnu.
-
-1. [Afficher les sessions de Strasbourg](T9_STRASBOURG)
+Impossible de réaliser ce test sans géolocalisation.
 
 `endif`
 
-`if @estDijon == true`
+1. [Retour au menu](V5_MENU)
 
-✅ Dijon a été reconnu.
+---
 
-1. [Afficher les sessions de Dijon](T9_DIJON)
+## V5_FULL_INPUT
+
+### Test 7 — Parcours complet simulé
+
+Saisissez une commune, un lieu-dit ou un code postal.
+
+!Next: V5_FULL_BAN
+
+1. [Retour au menu](V5_MENU)
+
+## V5_FULL_BAN
+
+`@adresseUtilisateur = calc(@INPUT.trim().toLowerCase())`
+`@adresseSujet = calc(mainTopic(@adresseUtilisateur))`
+
+Votre recherche : **`@adresseUtilisateur`**
+
+### Étape 1 — Correspondances BAN
+
+```readcsv URL_BAN_RAW
+condition: $2.toLowerCase().includes(mainTopic("@INPUT").toLowerCase()) || $3 == "@adresseUtilisateur" || $5.toLowerCase().includes(mainTopic("@INPUT").toLowerCase())
+maxResults: 3
+
+$i. **$5 — $3**  
+Lieu-dit : $2  
+Coordonnées : $11, $10
+```
+
+### Étape 2 — Trois centres selon la géolocalisation du navigateur
+
+`if @LATITUDE != undefined && @LONGITUDE != undefined`
+
+```readcsv URL_CENTRES_RAW
+condition: Math.abs($5-@LATITUDE)<4 && Math.abs($6-@LONGITUDE)<4
+maxResults: 3
+
+### $i. $2 ($3)
+
+Région : $4  
+Coordonnées : $5, $6  
+[Ouvrir l’inscription](link:$7)
+```
 
 `endif`
 
-`if @estStrasbourg != true && @estDijon != true`
+`if @LATITUDE == undefined || @LONGITUDE == undefined`
 
-La localisation n’est pas encore présente dans ce prototype.
-
-1. [Modifier la recherche](T9_START)
+La recherche BAN peut fonctionner, mais le classement des centres nécessite la géolocalisation.
 
 `endif`
 
-1. [Retour au menu](MENU)
+`@testFull = à vérifier`
 
-## T9_STRASBOURG
+1. [Nouvelle recherche](V5_FULL_INPUT)
+2. [Retour au menu](V5_MENU)
 
-### Sessions de Strasbourg
+---
 
-Type d’examen sélectionné : **`@typeExamenTest`**
+## V5_REPORT
 
-Exemples de dates :
-
-- 9 septembre 2026
-- 30 septembre 2026
-- 22 octobre 2026
-
-1. [Ouvrir le formulaire d’inscription](link:https://forms.office.com/)
-2. [Nouvelle recherche](T9_START)
-3. [Retour au menu](MENU)
-
-## T9_DIJON
-
-### Sessions de Dijon
-
-Type d’examen sélectionné : **`@typeExamenTest`**
-
-Exemples de dates :
-
-- 10 août 2026
-- 7 septembre 2026
-- 12 octobre 2026
-
-1. [Ouvrir le formulaire d’inscription](link:https://forms.office.com/)
-2. [Nouvelle recherche](T9_START)
-3. [Retour au menu](MENU)
-
-## REPORT
-
-### Bilan de compatibilité
+### Bilan du laboratoire V5
 
 | Fonction | Résultat |
 |---|---|
-| `.includes()` | `@testIncludes` |
-| `.startsWith()` | `@testStartsWith` |
-| `.endsWith()` | `@testEndsWith` |
-| `mainTopic()` | `@testMainTopic` |
-| URL dynamique | `@testUrlDynamique` |
-| Géolocalisation | `@testGeo` |
-| Paramètre `@GET` | `@testGET` |
-| Navigation conditionnelle | `@testNavigationConditionnelle` |
-| `readcsv` | `@testCSV` |
+| Chargement BAN | `@testBanLoad` |
+| Recherche par commune | `@testBanSearch` |
+| Recherche par code postal | `@testBanCP` |
+| Chargement centres FRATE | `@testCentresLoad` |
+| Préfiltrage géographique | `@testGeoCentres` |
+| Classement expérimental | `@testNearest` |
+| Parcours complet | `@testFull` |
 
-### Décision pour le projet
+### Critères de décision
 
-- Si `.includes()` fonctionne, la question libre pourra détecter des expressions dans une phrase.
-- Si l’une des variantes d’URL dynamique fonctionne, une saisie pourra être transmise à la BAN.
-- Si la géolocalisation fonctionne, les coordonnées de l’utilisateur pourront alimenter un calcul de proximité.
-- Si `readcsv` fonctionne, les centres et sessions pourront être lus depuis les fichiers générés par Python.
-- Le mini-parcours doit permettre de vérifier l’architecture déterministe du module 07 sans dépendre d’une API.
+- Si le test 1 affiche des lignes, `readcsv` charge correctement le CSV BAN.
+- Si les tests 2 et 3 filtrent les lignes, les variables ChatMD sont utilisables dans `condition:`.
+- Si le test 4 affiche les centres, le second CSV est opérationnel.
+- Si la variante B du test 6 fonctionne, ChatMD peut probablement calculer et trier les centres à la volée.
+- Si seule la variante A fonctionne, Python devra pré-calculer ou fournir les centres déjà classés.
+- Le fichier BAN national de grande taille ne devra être utilisé qu’après validation sur un fichier réduit.
 
-1. [Recommencer les tests](RESET)
-2. [Retour au menu](MENU)
+1. [Réinitialiser les indicateurs](V5_RESET)
+2. [Retour au menu](V5_MENU)
 
-## RESET
+## V5_RESET
 
-`@testIncludes = undefined`
-`@testStartsWith = undefined`
-`@testEndsWith = undefined`
-`@testMainTopic = undefined`
-`@testUrlDynamique = undefined`
-`@testGeo = undefined`
-`@testGET = undefined`
-`@testNavigationConditionnelle = undefined`
-`@testCSV = undefined`
+`@testBanLoad = undefined`
+`@testBanSearch = undefined`
+`@testBanCP = undefined`
+`@testCentresLoad = undefined`
+`@testGeoCentres = undefined`
+`@testNearest = undefined`
+`@testFull = undefined`
 
 Les indicateurs ont été réinitialisés.
 
-1. [Retour au menu](MENU)
+1. [Retour au menu](V5_MENU)
