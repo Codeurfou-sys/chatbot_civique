@@ -10,6 +10,8 @@ obfuscate: false
 
 Ce laboratoire est destiné à valider systématiquement les fonctionnalités de ChatMD avant leur intégration dans le chatbot Examen civique.
 
+1. [Commencer les tests](#MENU)
+
 ## MENU
 
 1. [Variables et @INPUT](#T1)
