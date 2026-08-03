@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-03T12:39:29+02:00",
+  "generated_at": "2026-08-03T13:13:27+02:00",
   "links": [
     {
       "code_centre": "CLERMONT_FERRAND",
@@ -8,7 +8,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "LE_PUY_EN_VELAY",
@@ -17,7 +17,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "SAINT_FLOUR",
@@ -26,7 +26,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "VICHY",
@@ -35,7 +35,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "AUXERRE",
@@ -44,7 +44,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "DIJON",
@@ -53,7 +53,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "MACON",
@@ -62,7 +62,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "MONTCEAU_LES_MINES",
@@ -71,7 +71,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "NEVERS",
@@ -80,7 +80,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "SENS",
@@ -89,7 +89,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "BOURGES",
@@ -98,7 +98,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "BESANCON",
@@ -107,7 +107,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "LONS_LE_SAUNIER",
@@ -116,7 +116,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "MONTBELIARD",
@@ -125,7 +125,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "CHAUMONT",
@@ -134,7 +134,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "MULHOUSE",
@@ -143,7 +143,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "REIMS",
@@ -152,7 +152,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "SAINT_DIE_DES_VOSGES",
@@ -161,7 +161,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "STRASBOURG",
@@ -170,7 +170,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "TROYES",
@@ -179,7 +179,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "ANNEMASSE",
@@ -188,7 +188,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "ANNECY",
@@ -197,7 +197,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "BOURG_EN_BRESSE",
@@ -206,7 +206,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     },
     {
       "code_centre": "VALSERHONE",
@@ -215,7 +215,7 @@
       "valid_syntax": true,
       "reachable": true,
       "http_status": 200,
-      "checked_at": "2026-08-03T12:39:27+02:00"
+      "checked_at": "2026-08-03T13:13:25+02:00"
     }
   ]
 }

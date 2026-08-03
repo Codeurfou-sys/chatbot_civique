@@ -14,7 +14,7 @@ Le classeur Excel reste la source de vérité. Le script :
 3. lit les catalogues d'écrans 90 à 98 ;
 4. lit les transitions de 99_NAVIGATION ;
 5. résout les contenus internes et les fichiers Markdown externes ;
-6. génère un fichier principal ChatMD et un fichier par module ;
+6. génère un fichier principal ChatMD autonome et un fichier par module ;
 7. génère les index CSV/JSON utiles à la FAQ, au glossaire,
    au module 07 et à la question libre ;
 8. produit un rapport de validation et un manifeste d'export.
@@ -59,6 +59,8 @@ ChatMD utilise notamment :
 - des variables : @variable et @{variable}
 - des calculs :   `@score = calc(@score+1)`
 - des conditions : `if @variable == valeur`
+
+Le fichier principal concatène tous les modules afin que ChatMD puisse fonctionner sans charger des inclusions relatives.
 
 Le moteur Excel contient aussi des règles formulées en langage naturel.
 Le script exporte directement les règles simples et signale dans le rapport
@@ -1435,16 +1437,18 @@ class ChatMDRenderer:
     def render_main_file(
         self,
         module_files: list[str],
+        module_contents: list[tuple[str, str]],
         title: str,
         start_screen: str,
     ) -> str:
-        includes = []
-        for filename in module_files:
-            if self.base_url:
-                includes.append(f'  - "{self.base_url}/{filename}"')
-            else:
-                includes.append(f'  - "{filename}"')
+        """
+        Génère un fichier ChatMD autonome.
 
+        Les fichiers du dossier modules/ sont toujours conservés pour la
+        maintenance, mais leur contenu est aussi concaténé dans chat_bot.md.
+        Cette stratégie évite de dépendre du support des inclusions relatives
+        par ChatMD ou du navigateur.
+        """
         front_matter = [
             "---",
             f"obfuscate: {'true' if self.obfuscate else 'false'}",
@@ -1453,8 +1457,6 @@ class ChatMDRenderer:
                 if self.variables_dynamic
                 else "variablesDynamiques: false"
             ),
-            "include:",
-            *includes,
             "---",
             "",
         ]
@@ -1465,7 +1467,53 @@ class ChatMDRenderer:
             f"1. [Commencer]({start_screen})",
             "",
         ]
-        return "\n".join(front_matter + body)
+
+        consolidated: list[str] = []
+        seen_sections: set[str] = set()
+        section_pattern = re.compile(r"^##\s+([A-Za-z0-9_*-]+)\s*$", re.MULTILINE)
+
+        for filename, content in module_contents:
+            cleaned = content.strip()
+            if not cleaned:
+                continue
+
+            # Évite les doublons d'écrans dans le fichier final.
+            sections = section_pattern.findall(cleaned)
+            duplicate_sections = [
+                section for section in sections if section in seen_sections
+            ]
+            if duplicate_sections:
+                self.reader.add_issue(
+                    "WARNING",
+                    "DUPLICATE_SECTION_SKIPPED",
+                    "Sections déjà présentes ignorées dans le fichier consolidé : "
+                    + ", ".join(sorted(set(duplicate_sections))),
+                    value=filename,
+                )
+                blocks = re.split(r"(?=^##\s+[A-Za-z0-9_*-]+\s*$)", cleaned, flags=re.MULTILINE)
+                kept_blocks: list[str] = []
+                for block in blocks:
+                    match = re.match(r"^##\s+([A-Za-z0-9_*-]+)\s*$", block, re.MULTILINE)
+                    if match and match.group(1) in seen_sections:
+                        continue
+                    kept_blocks.append(block)
+                cleaned = "\n".join(block.strip() for block in kept_blocks if block.strip())
+
+            for section in section_pattern.findall(cleaned):
+                seen_sections.add(section)
+
+            consolidated.extend(
+                [
+                    f"<!-- Début du fichier source : {filename} -->",
+                    "",
+                    cleaned,
+                    "",
+                    f"<!-- Fin du fichier source : {filename} -->",
+                    "",
+                ]
+            )
+
+        return "\n".join(front_matter + body + consolidated).rstrip() + "\n"
 
     def render_start_file(
         self,
@@ -1847,10 +1895,32 @@ class ExportApplication:
             str(Path(filename).as_posix())
             for filename in generated_module_files
         ]
+        module_contents: list[tuple[str, str]] = []
+        for relative_path in generated_module_files:
+            module_path = self.output_dir / relative_path
+            if not module_path.exists():
+                reader.add_issue(
+                    "ERROR",
+                    "MISSING_GENERATED_MODULE",
+                    f"Fichier de module généré introuvable : {relative_path}",
+                    value=relative_path,
+                )
+                continue
+            module_contents.append(
+                (
+                    relative_path,
+                    module_path.read_text(
+                        encoding=DEFAULT_ENCODING,
+                        errors="replace",
+                    ),
+                )
+            )
+
         atomic_write(
             main_path,
             renderer.render_main_file(
                 module_files=include_paths,
+                module_contents=module_contents,
                 title=title,
                 start_screen=start_screen,
             ),

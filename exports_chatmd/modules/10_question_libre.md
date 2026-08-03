@@ -1,5 +1,5 @@
 <!-- Module généré automatiquement : Question libre -->
-<!-- Date : 2026-08-03T12:39:32+02:00 -->
+<!-- Date : 2026-08-03T13:13:33+02:00 -->
 
 ## SCR_QL_CONFIRM
 
