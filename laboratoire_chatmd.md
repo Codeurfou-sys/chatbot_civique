@@ -1,79 +1,67 @@
 ---
-titre: Laboratoire ChatMD V5 — readcsv, BAN et centres FRATE
+titre: Laboratoire ChatMD V5 — BAN et centres FRATE
 variablesDynamiques: true
 geolocation: true
 plugins: readcsv
 obfuscate: false
-gestionGrosMots: false
-rechercheContenu: false
-
-# IMPORTANT
-# Remplacez les deux URL ci-dessous dans tout le fichier avant le test :
-# URL_BAN_RAW = URL Raw GitHub du CSV BAN réduit
-# URL_CENTRES_RAW = URL Raw GitHub du CSV des centres FRATE
-#
-# Exemple :
-# https://raw.githubusercontent.com/UTILISATEUR/DEPOT/main/data/ban_reduit.csv
-# https://raw.githubusercontent.com/UTILISATEUR/DEPOT/main/data/centres_frate.csv
-
 preload:
-  - URL_BAN_RAW
-  - URL_CENTRES_RAW
+  - https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/lieux_dits_test.csv
+  - https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/centres_frate.csv
 ---
 
 # Laboratoire ChatMD V5
 
-Ce laboratoire vérifie si le plugin officiel `readcsv` peut alimenter le module **Passer mon examen** à partir de données externes.
+Ce laboratoire utilise deux fichiers CSV réels publiés dans le dépôt GitHub :
 
-1. [Commencer le laboratoire](V5_MENU)
+- `lieux_dits_test.csv`
+- `centres_frate.csv`
+
+1. [Commencer les tests](V5_MENU)
 
 ## V5_MENU
 
-### Tests disponibles
+### Tests proposés
 
-1. [Test 1 — Vérifier le chargement du CSV BAN](V5_BAN_LOAD)
-2. [Test 2 — Rechercher une commune ou un lieu-dit](V5_BAN_INPUT)
-3. [Test 3 — Rechercher un code postal](V5_CP_INPUT)
-4. [Test 4 — Vérifier le CSV des centres FRATE](V5_CENTRES_LOAD)
-5. [Test 5 — Afficher des centres autour d’une position](V5_GEO)
-6. [Test 6 — Tentative de classement des trois centres](V5_NEAREST)
-7. [Test 7 — Parcours complet simulé](V5_FULL_INPUT)
+1. [Vérifier la lecture du CSV des lieux](V5_BAN_LOAD)
+2. [Rechercher une ville ou une adresse](V5_BAN_INPUT)
+3. [Rechercher un code postal](V5_CP_INPUT)
+4. [Vérifier la lecture des centres FRATE](V5_CENTRES_LOAD)
+5. [Rechercher un centre par ville](V5_CENTRE_INPUT)
+6. [Afficher les centres proches de ma position](V5_GEO)
+7. [Tester un parcours simplifié du module 07](V5_MODULE_INPUT)
 8. [Afficher le bilan](V5_REPORT)
-
----
 
 ## V5_BAN_LOAD
 
-### Test 1 — Chargement du CSV BAN
+### Test 1 — Lecture du CSV des lieux
 
-Le bloc suivant doit afficher au maximum trois lignes du fichier BAN.
+Les trois premières lignes du fichier doivent apparaître ci-dessous.
 
-```readcsv URL_BAN_RAW
+```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/lieux_dits_test.csv
 maxResults: 3
 
-$i. **$5** — code postal : **$3**
-Coordonnées : latitude **$11**, longitude **$10**
-Lieu-dit : $2
+### $i. $2
+
+- Code postal : **$1**
+- Adresse : $3
+- Latitude : $4
+- Longitude : $5
 ```
 
-`@testBanLoad = à vérifier`
+`@testBanLoad = réussi si trois résultats apparaissent`
 
 1. [Retour au menu](V5_MENU)
 
----
-
 ## V5_BAN_INPUT
 
-### Test 2 — Recherche d’une commune ou d’un lieu-dit
+### Test 2 — Recherche d’une ville ou d’une adresse
 
-Écrivez une commune ou un lieu-dit dans la zone principale de ChatMD.
-
-Exemples :
+Saisissez par exemple :
 
 - Strasbourg
 - Bourges
-- Clermont-Ferrand
-- Oberlin
+- rue du Jura
+- place Darcy
 
 !Next: V5_BAN_RESULTS
 
@@ -81,40 +69,34 @@ Exemples :
 
 ## V5_BAN_RESULTS
 
-`@rechercheBan = calc(@INPUT.trim().toLowerCase())`
-`@sujetBan = calc(mainTopic(@rechercheBan))`
+`@rechercheLieu = calc(@INPUT.trim().toLowerCase())`
+`@sujetLieu = calc(mainTopic(@rechercheLieu))`
 
-Recherche normalisée : **`@rechercheBan`**
+Recherche : **`@rechercheLieu`**
 
-Sujet principal : **`@sujetBan`**
+Sujet principal : **`@sujetLieu`**
 
-### Résultats trouvés
-
-```readcsv URL_BAN_RAW
-condition: $2.toLowerCase().includes(mainTopic("@INPUT").toLowerCase()) || $5.toLowerCase().includes(mainTopic("@INPUT").toLowerCase())
+```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/lieux_dits_test.csv
+condition: $2.toLowerCase().includes(mainTopic("@INPUT").toLowerCase()) || $3.toLowerCase().includes(mainTopic("@INPUT").toLowerCase())
 maxResults: 5
 
-### $i. $5
+### $i. $2 — $1
 
-- Lieu-dit : $2
-- Code postal : $3
-- Commune : $5
-- Longitude : $10
-- Latitude : $11
+Adresse : $3  
+Latitude : $4  
+Longitude : $5
 ```
 
 `@testBanSearch = à vérifier`
 
-1. [Faire une autre recherche](V5_BAN_INPUT)
+1. [Nouvelle recherche](V5_BAN_INPUT)
 2. [Retour au menu](V5_MENU)
-
----
 
 ## V5_CP_INPUT
 
 ### Test 3 — Recherche par code postal
 
-Saisissez exactement un code postal à cinq chiffres.
+Saisissez un code postal présent dans le fichier, par exemple `67000`, `21000` ou `63000`.
 
 !Next: V5_CP_RESULTS
 
@@ -122,243 +104,207 @@ Saisissez exactement un code postal à cinq chiffres.
 
 ## V5_CP_RESULTS
 
-`@codePostalBan = calc(@INPUT.trim())`
+`@rechercheCP = calc(@INPUT.trim())`
 
-Code postal recherché : **`@codePostalBan`**
+Code postal : **`@rechercheCP`**
 
-```readcsv URL_BAN_RAW
-condition: $3 == "@codePostalBan"
-sort: $5 asc alph
+```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/lieux_dits_test.csv
+condition: $1 == "@rechercheCP"
+sort: $2 asc alph
 maxResults: 5
 
-$i. **$5** — $3  
-Lieu-dit : $2  
-Coordonnées : $11, $10
+### $i. $2
+
+Adresse : $3  
+Code postal : $1  
+Coordonnées : $4, $5
 ```
 
 `@testBanCP = à vérifier`
 
-1. [Rechercher un autre code postal](V5_CP_INPUT)
+1. [Nouvelle recherche](V5_CP_INPUT)
 2. [Retour au menu](V5_MENU)
-
----
 
 ## V5_CENTRES_LOAD
 
-### Test 4 — Chargement du CSV des centres FRATE
+### Test 4 — Lecture du CSV des centres FRATE
 
-Structure attendue du fichier `centres_frate.csv` :
+```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/centres_frate.csv
+sort: $2 asc alph
+maxResults: 8
 
-```csv
-centre_id;ville;departement;region;latitude;longitude;lien_inscription
-STRASBOURG;Strasbourg;67;Grand Est;48.5734;7.7521;https://...
-DIJON;Dijon;21;Bourgogne;47.3220;5.0415;https://...
-CLERMONT_FERRAND;Clermont-Ferrand;63;Auvergne;45.7772;3.0870;https://...
+### $i. $2 — $3
+
+- Région : $4
+- Latitude : $5
+- Longitude : $6
+- [Ouvrir le lien d’inscription](link:$7)
 ```
 
-Lecture du fichier :
+`@testCentresLoad = réussi si les centres apparaissent`
 
-```readcsv URL_CENTRES_RAW
-sort: $2 asc alph
+1. [Retour au menu](V5_MENU)
+
+## V5_CENTRE_INPUT
+
+### Test 5 — Recherche d’un centre par ville
+
+Saisissez par exemple `Strasbourg`, `Dijon`, `Colmar` ou `Lyon`.
+
+!Next: V5_CENTRE_RESULTS
+
+1. [Retour au menu](V5_MENU)
+
+## V5_CENTRE_RESULTS
+
+`@rechercheCentre = calc(@INPUT.trim().toLowerCase())`
+
+Ville recherchée : **`@rechercheCentre`**
+
+```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/centres_frate.csv
+condition: $2.toLowerCase().includes(mainTopic("@INPUT").toLowerCase()) || $3 == "@rechercheCentre"
 maxResults: 5
 
-$i. **$2 ($3)**  
+### Centre de $2
+
+Code postal : $3  
 Région : $4  
 Coordonnées : $5, $6  
 [Inscription](link:$7)
 ```
 
-`@testCentresLoad = à vérifier`
+`@testCentreSearch = à vérifier`
 
-1. [Retour au menu](V5_MENU)
-
----
+1. [Nouvelle recherche](V5_CENTRE_INPUT)
+2. [Retour au menu](V5_MENU)
 
 ## V5_GEO
 
-### Test 5 — Centres autour de la géolocalisation
+### Test 6 — Centres autour de la géolocalisation
 
-Latitude de l’utilisateur : **`@LATITUDE`**
+Latitude : **`@LATITUDE`**
 
-Longitude de l’utilisateur : **`@LONGITUDE`**
+Longitude : **`@LONGITUDE`**
 
 Précision : **`@POSITION_ACCURACY`** mètres
 
 `if @LATITUDE != undefined && @LONGITUDE != undefined`
 
-✅ La géolocalisation est disponible.
+Le bloc conserve les centres situés dans une zone de quatre degrés autour de la position.
 
-Le filtre ci-dessous conserve les centres situés dans un carré géographique d’environ deux degrés autour de la position.  
-Il s’agit d’un **préfiltrage**, pas encore d’un classement exact par distance.
+```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/centres_frate.csv
+condition: Math.abs($5-@LATITUDE)<4 && Math.abs($6-@LONGITUDE)<4
+maxResults: 3
 
-```readcsv URL_CENTRES_RAW
-condition: Math.abs($5-@LATITUDE)<2 && Math.abs($6-@LONGITUDE)<2
-maxResults: 10
+### $i. Centre de $2
 
-$i. **$2 ($3)**  
+Code postal : $3  
 Région : $4  
-Latitude : $5 — Longitude : $6  
+Coordonnées : $5, $6  
 [Inscription](link:$7)
 ```
 
-`@testGeoCentres = à vérifier`
+`@testGeo = réussi si trois centres apparaissent`
 
 `endif`
 
 `if @LATITUDE == undefined || @LONGITUDE == undefined`
 
-La géolocalisation n’est pas disponible. Autorisez-la dans le navigateur puis rechargez la page.
+La géolocalisation n’est pas disponible. Autorisez-la dans le navigateur puis rechargez ChatMD.
 
-`@testGeoCentres = géolocalisation indisponible`
-
-`endif`
-
-1. [Retour au menu](V5_MENU)
-
----
-
-## V5_NEAREST
-
-### Test 6 — Tentative de classement des trois centres les plus proches
-
-ChatMD documente le tri sur une **colonne** :
-
-```text
-sort: $5 asc num
-```
-
-La documentation ne confirme pas officiellement le tri sur une formule calculée.  
-Les trois variantes suivantes permettent de déterminer ce que la version actuelle accepte.
-
-`if @LATITUDE != undefined && @LONGITUDE != undefined`
-
-### Variante A — Préfiltrage puis ordre du CSV
-
-```readcsv URL_CENTRES_RAW
-condition: Math.abs($5-@LATITUDE)<4 && Math.abs($6-@LONGITUDE)<4
-maxResults: 3
-
-$i. **$2** — $4  
-Coordonnées : $5, $6
-```
-
-### Variante B — Tri expérimental par distance au carré
-
-```readcsv URL_CENTRES_RAW
-condition: Math.abs($5-@LATITUDE)<4 && Math.abs($6-@LONGITUDE)<4
-sort: calc((($5-@LATITUDE)*($5-@LATITUDE))+(($6-@LONGITUDE)*($6-@LONGITUDE))) asc num
-maxResults: 3
-
-$i. **$2** — $4  
-Coordonnées : $5, $6
-```
-
-### Variante C — Affichage expérimental de la distance au carré
-
-```readcsv URL_CENTRES_RAW
-condition: Math.abs($5-@LATITUDE)<4 && Math.abs($6-@LONGITUDE)<4
-maxResults: 3
-
-$i. **$2** — $4  
-Distance expérimentale : calc((($5-@LATITUDE)*($5-@LATITUDE))+(($6-@LONGITUDE)*($6-@LONGITUDE)))
-```
-
-`@testNearest = à vérifier`
-
-`endif`
-
-`if @LATITUDE == undefined || @LONGITUDE == undefined`
-
-Impossible de réaliser ce test sans géolocalisation.
+`@testGeo = géolocalisation indisponible`
 
 `endif`
 
 1. [Retour au menu](V5_MENU)
 
----
+## V5_MODULE_INPUT
 
-## V5_FULL_INPUT
+### Test 7 — Parcours simplifié du module 07
 
-### Test 7 — Parcours complet simulé
+Saisissez une ville ou un code postal.
 
-Saisissez une commune, un lieu-dit ou un code postal.
+Exemples : `Strasbourg`, `67000`, `Dijon`, `21000`.
 
-!Next: V5_FULL_BAN
+!Next: V5_MODULE_RESULTS
 
 1. [Retour au menu](V5_MENU)
 
-## V5_FULL_BAN
+## V5_MODULE_RESULTS
 
-`@adresseUtilisateur = calc(@INPUT.trim().toLowerCase())`
-`@adresseSujet = calc(mainTopic(@adresseUtilisateur))`
+`@demandeModule = calc(@INPUT.trim().toLowerCase())`
+`@demandeSujet = calc(mainTopic(@demandeModule))`
 
-Votre recherche : **`@adresseUtilisateur`**
+Recherche saisie : **`@demandeModule`**
 
-### Étape 1 — Correspondances BAN
+### Étape 1 — Lieux correspondants
 
-```readcsv URL_BAN_RAW
-condition: $2.toLowerCase().includes(mainTopic("@INPUT").toLowerCase()) || $3 == "@adresseUtilisateur" || $5.toLowerCase().includes(mainTopic("@INPUT").toLowerCase())
+```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/lieux_dits_test.csv
+condition: $1 == "@demandeModule" || $2.toLowerCase().includes(mainTopic("@INPUT").toLowerCase()) || $3.toLowerCase().includes(mainTopic("@INPUT").toLowerCase())
 maxResults: 3
 
-$i. **$5 — $3**  
-Lieu-dit : $2  
-Coordonnées : $11, $10
+$i. **$2 — $1**  
+$3  
+Coordonnées : $4, $5
 ```
 
-### Étape 2 — Trois centres selon la géolocalisation du navigateur
+### Étape 2 — Centre FRATE correspondant à la ville ou au code postal
 
-`if @LATITUDE != undefined && @LONGITUDE != undefined`
-
-```readcsv URL_CENTRES_RAW
-condition: Math.abs($5-@LATITUDE)<4 && Math.abs($6-@LONGITUDE)<4
+```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/centres_frate.csv
+condition: $2.toLowerCase().includes(mainTopic("@INPUT").toLowerCase()) || $3 == "@demandeModule"
 maxResults: 3
 
-### $i. $2 ($3)
+### Centre de $2
 
+Code postal : $3  
 Région : $4  
 Coordonnées : $5, $6  
 [Ouvrir l’inscription](link:$7)
 ```
 
+### Étape 3 — Centres autour de la position du navigateur
+
+`if @LATITUDE != undefined && @LONGITUDE != undefined`
+
+```readcsv https://raw.githubusercontent.com/Codeurfou-sys/chatbot_civique/refs/heads/main/centres_frate.csv
+condition: Math.abs($5-@LATITUDE)<4 && Math.abs($6-@LONGITUDE)<4
+maxResults: 3
+
+$i. **$2 ($3)** — $4  
+[Inscription](link:$7)
+```
+
 `endif`
 
-`if @LATITUDE == undefined || @LONGITUDE == undefined`
+`@testModule = à vérifier`
 
-La recherche BAN peut fonctionner, mais le classement des centres nécessite la géolocalisation.
-
-`endif`
-
-`@testFull = à vérifier`
-
-1. [Nouvelle recherche](V5_FULL_INPUT)
+1. [Nouvelle recherche](V5_MODULE_INPUT)
 2. [Retour au menu](V5_MENU)
-
----
 
 ## V5_REPORT
 
-### Bilan du laboratoire V5
+### Bilan
 
 | Fonction | Résultat |
 |---|---|
-| Chargement BAN | `@testBanLoad` |
-| Recherche par commune | `@testBanSearch` |
+| Chargement du CSV des lieux | `@testBanLoad` |
+| Recherche par texte | `@testBanSearch` |
 | Recherche par code postal | `@testBanCP` |
-| Chargement centres FRATE | `@testCentresLoad` |
-| Préfiltrage géographique | `@testGeoCentres` |
-| Classement expérimental | `@testNearest` |
-| Parcours complet | `@testFull` |
+| Chargement des centres | `@testCentresLoad` |
+| Recherche d’un centre | `@testCentreSearch` |
+| Filtre géographique | `@testGeo` |
+| Parcours Module 07 | `@testModule` |
 
-### Critères de décision
+### Validation attendue
 
-- Si le test 1 affiche des lignes, `readcsv` charge correctement le CSV BAN.
-- Si les tests 2 et 3 filtrent les lignes, les variables ChatMD sont utilisables dans `condition:`.
-- Si le test 4 affiche les centres, le second CSV est opérationnel.
-- Si la variante B du test 6 fonctionne, ChatMD peut probablement calculer et trier les centres à la volée.
-- Si seule la variante A fonctionne, Python devra pré-calculer ou fournir les centres déjà classés.
-- Le fichier BAN national de grande taille ne devra être utilisé qu’après validation sur un fichier réduit.
+- Le test 1 confirme que `readcsv` charge réellement `lieux_dits_test.csv`.
+- Les tests 2 et 3 confirment que les variables dynamiques fonctionnent dans `condition:`.
+- Le test 4 confirme que `centres_frate.csv` est lisible.
+- Le test 5 confirme qu’un centre peut être retrouvé à partir d’une ville.
+- Le test 6 confirme que les coordonnées du navigateur peuvent filtrer les centres.
+- Le test 7 valide un premier parcours fonctionnel du module 07.
 
-1. [Réinitialiser les indicateurs](V5_RESET)
+1. [Recommencer](V5_RESET)
 2. [Retour au menu](V5_MENU)
 
 ## V5_RESET
@@ -367,9 +313,9 @@ La recherche BAN peut fonctionner, mais le classement des centres nécessite la 
 `@testBanSearch = undefined`
 `@testBanCP = undefined`
 `@testCentresLoad = undefined`
-`@testGeoCentres = undefined`
-`@testNearest = undefined`
-`@testFull = undefined`
+`@testCentreSearch = undefined`
+`@testGeo = undefined`
+`@testModule = undefined`
 
 Les indicateurs ont été réinitialisés.
 

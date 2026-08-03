@@ -1,0 +1,9 @@
+centre_id,ville,code_postal,region,latitude,longitude,lien
+STRASBOURG,Strasbourg,67000,Grand Est,48.5734,7.7521,https://forms.office.com/strasbourg
+COLMAR,Colmar,68000,Grand Est,48.079,7.3585,https://forms.office.com/colmar
+MULHOUSE,Mulhouse,68100,Grand Est,47.7508,7.3359,https://forms.office.com/mulhouse
+DIJON,Dijon,21000,Bourgogne-Franche-Comté,47.322,5.0415,https://forms.office.com/dijon
+BESANCON,Besançon,25000,Bourgogne-Franche-Comté,47.2378,6.0241,https://forms.office.com/besancon
+LYON,Lyon,69000,Auvergne-Rhône-Alpes,45.764,4.8357,https://forms.office.com/lyon
+CLERMONT,Clermont-Ferrand,63000,Auvergne-Rhône-Alpes,45.7772,3.087,https://forms.office.com/clermont
+REIMS,Reims,51100,Grand Est,49.2583,4.0317,https://forms.office.com/reims
